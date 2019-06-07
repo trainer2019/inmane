@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+<meta th:include="common/layout.html::head" th:remove="tag"></meta>
+</head>
+<body style="text-align: center;">
+  <div>
+    <h2>
+      <img src="../static/images/logo.svg" th:src="@{images/logo.svg}" width="70px" height="70px">In Mane -稼働状況管理システム-
+    </h2>
+  </div>
+  <br />
+  <p th:if="${loginFailureMessage!=null or loginFailureMessage!=''}" th:text="${loginFailureMessage}" style="color: red;"></p>
+  <form th:action="@{/security/login}" method="POST" style="display: inline-block; height: 88%;">
+    <div style="border: #d0d0d0 solid 1px;">
+      <!--/* ダイアログメッセージ */-->
+      <table style="padding: 30px;">
+        <tr>
+          <td>
+            <label for="userId">ユーザID:</label>
+          </td>
+          <td>
+            <input type="text" id="userId" name="userId" value="" maxlength="10" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="password">パスワード:</label>
+          </td>
+          <td>
+            <input type="password" id="password" name="password" value="" maxlength="20" />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="text-align: right;">
+            <button type="submit">ログイン</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</body>
+
+</html>

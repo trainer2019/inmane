@@ -1,0 +1,269 @@
+@charset "UTF-8";
+html, body {
+}
+/* *************** */
+.wrapper {
+  margin: auto;
+}
+header {
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  box-sizing: border-box;
+}
+.main {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.side {
+  width: 15%;
+  min-width: 200px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.top {
+  width: 100%;
+  box-sizing: border-box;
+}
+.bottom {
+  width: 100%;
+  box-sizing: border-box;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  background: #0080ff;
+  box-sizing: border-box;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+  text-align:center;
+  color: #ffffff;
+  margin-left: -8px;
+ 
+}
+
+@media (max-width: 600px){
+  .container {
+    flex-direction: column;
+  }
+  .main,
+  .side {
+    width: 100%;
+  }
+}
+
+/* タブメニュー全体の設定 */
+div.tabbox {
+  margin: 15px 0 0 0;
+  padding: 0px;
+  width: 600px;
+  height: 200px;
+}
+/* タブ部分のマージンとパディング領域を設定 */
+p.tabs {
+  margin: 0px;
+  padding: 0px;
+}
+
+p.tabs a {
+  /* リンクをタブのように見せる */
+  display: block;
+  width: 100px;
+  float: left;
+  margin: 0px 3px 0px 0px;
+  padding: 3px;
+  text-align: center;
+  font-size: 12px;
+}
+/* タブごとの配色設定 */
+p.tabs a.tab,
+p.tabs a.tab_other {
+  text-decoration: none;
+  background-color: #fafafa;
+  border-right: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+  color: #666;
+  font-weight: 600;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+p.tabs a.tab {
+  border-top: 3px solid rgba(0, 0, 170, 0.85);
+  border-bottom: 2px solid #fafafa;
+  margin-bottom: -2px;
+}
+
+p.tabs a.tab_other {
+  border-top: 3px solid #dcdcdc;
+}
+
+p.tabs a.tab_other:hover {
+  opacity: 0.7;
+  filter: alpha(opacity = 70);
+}
+/* タブ中身のボックス */
+div.tab {
+  clear: left;
+}
+/* *************** */
+
+div#logo{
+  text-align: left;
+  float: left;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+div#anavBar{
+  text-align: right;
+  padding: 0px 10px 0px 0px;
+}
+
+#sideMenu {
+  text-align: left;
+  background-color: #1e90ff;
+  display: inline;
+  float: left;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.menu {
+  color:#ffffff;
+  text-decoration: none;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.menu:hover {
+  opacity: 0.7;
+  filter: alpha(opacity = 70);
+}
+.menu:hover:before {
+  white-space: pre-wrap;
+  content: " ";
+}
+
+.menuLists {
+  list-style: none;
+  padding-left: 3px;
+}
+
+
+.boardTitle {
+  box-sizing: border-box;
+  border: 1px solid #000;
+  padding: 0px 0px 0px 0px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #000;
+  color: #fff;
+}
+
+.boardArea {
+  box-sizing: border-box;
+  border: 1px solid #000;
+  background-color: #F9F9F9;
+  color: #000;
+  font-size: 14px;
+}
+
+/*全体*/
+.hidden_box {
+    padding: 0;
+}
+
+/*ボタン装飾*/
+.hidden_box label {
+    font-weight: bold;
+    cursor :pointer;
+}
+
+/*ボタンホバー時*/
+.hidden_box label:hover {
+    background: #efefef;
+}
+
+/*チェックは見えなくする*/
+.hidden_box input {
+    display: none;
+    transition: 0.8s;
+}
+
+/*中身を非表示にしておく*/
+.hidden_box .hiddenMenu {
+    height: 0;
+    padding: 0;
+    opacity: 0;
+    transition: 0.8s;
+}
+
+/*クリックで中身表示*/
+.hidden_box input:checked ~ .hiddenMenu {
+    padding: 15px 0;
+    height: auto;
+    opacity: 1;
+}
+
+.hidden_box input:not(:checked) ~ .hiddenMenu {
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/*モーダルダイアログ*/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+.closeMark {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closeMark:hover,
+.closeMark:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 必須マーク */
+.required:after {
+  color: #E00;
+  font-weight:bold;
+  content: " *";
+}

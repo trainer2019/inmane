@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>ユーザ管理</title>
+<meta th:include="common/layout.html::head" th:remove="tag"></meta>
+<link rel="stylesheet" th:href="@{/css/page/users.css}" />
+
+<script type="text/javascript">
+  /*<![CDATA[*/
+  window.onload = function() {
+    document.getElementById('tData').onscroll = function() {
+      let target = document.getElementById('tData');
+      target.parentElement.querySelector('#tHeader').scrollLeft = target.scrollLeft; // データ部のスクロールをヘッダに反映
+    }
+  }
+  /*]]>*/
+</script>
+<style type="text/css">
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div th:include="common/layout :: contentsHeader"></div>
+    </header>
+
+    <div class="container">
+      <div class="side">
+        <div th:include="common/layout :: sideMenu"></div>
+      </div>
+      <div class="main">
+        <div class="top">
+          <!--/* ▼ タブ表示 */-->
+          <div th:include="users_layout :: tabs"></div>
+          <!--/* ▲ タブ表示 */-->
+
+          <div class="tab">
+            <!--/* ▼ 検索フォーム */-->
+            <form method="get" action="#" th:action="@{/maintenance/users/search}" th:object="${usersSearchForm}">
+
+              <div class="boardArea" style="border: #d0d0d0 solid 1px;">
+                <table class="search_conditions">
+                  <tr>
+                    <td colspan="3">
+                      <input type="text" id="searchUserId" name="userId" th:field="*{userId}" placeholder="ユーザID" maxlength="10" size="30" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      <input type="text" id="searchUserName" name="userName" th:field="*{userName}" placeholder="ユーザ名" maxlength="20" size="30" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1">
+                      <label>ユーザ権限：</label>
+                    </td>
+                    <td colspan="2">
+                      <input id="radioAll" type="radio" name="roleName" value="ALL" th:field="*{roleName}" checked="checked">
+                      全て
+                      <input id="radioUser" type="radio" name="roleName" value="USER" th:field="*{roleName}">
+                      一般
+                      <input id="radioAdmin" type="radio" name="roleName" value="ADMIN" th:field="*{roleName}">
+                      管理者
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1">
+                      <label for="nonDeleted">削除済を除外：</label>
+                    </td>
+                    <td colspan="2">
+                      <input type="checkbox" name="nonDeleted" value="on" th:field="*{nonDeleted}" checked="checked" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="text-align: right;">
+                      <button type="submit">検索</button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </form>
+            <!--/* ▲ 検索結果リスト */-->
+          </div>
+        </div>
+
+        <!--/* ▼ 検索結果リスト */-->
+        <div class="bottom">
+          <div id="count">
+            <span th:text="'【検索結果：'+${#lists.size(usersList)}+'件】'"></span>
+          </div>
+          <div id="dataTable" class="dataTable">
+            <div id="tHeader">
+              <table class="t" name="tData">
+                <tr>
+                  <th>No.</th>
+                  <th>ユーザID</th>
+                  <th>ユーザ名</th>
+                  <th>権限</th>
+                  <th>削除</th>
+                  <th>最終更新日時</th>
+                  <th>登録日時</th>
+                </tr>
+              </table>
+            </div>
+
+            <div id="tData">
+              <table class="t" name="tData">
+                <tr th:if="user" th:each="user, userStat:${usersList}">
+                  <td th:text="${userStat.count}"></td>
+                  <td>
+                    <a th:href="@{'/maintenance/users/detail?userId=' + ${user.userId}}">[[${user.userId}]]</a>
+                  </td>
+                  <td>
+                    <label class="ellipsis" th:text="${user.userName}" th:title="${user.userName}"></label>
+                  </td>
+                  <td>[[${'ADMIN'.equals(user.roleName)} ? '管理者' : (${'USER'.equals(user.roleName)} ? '一般' : 'ERROR')]]</td>
+                  <td>[[${user.deleted==1} ? '済' : '']]</td>
+                  <td th:text="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+                  <td th:text="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--/* ▲ 検索結果リスト */-->
+      </div>
+    </div>
+
+    <footer>
+      <div th:include="common/layout :: footer"></div>
+    </footer>
+  </div>
+</body>
+</html>

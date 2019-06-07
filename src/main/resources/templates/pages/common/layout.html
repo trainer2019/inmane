@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<!-- Favicon -->
+<link rel="icon" type="images/x-icon" th:href="@{/images/favicon.ico}" />
+<!-- アプリケーション追加定義 -->
+<link rel="stylesheet" th:href="@{/css/app.css}" />
+<script type="text/javascript">
+  /*<![CDATA[*/
+  function showModalComfirmDialog(msgTxt, url) {
+    const modal = document.getElementById('modalDialog');
+    const btnCancel = document.getElementById("btnCancel");
+    const btnOk = document.getElementById("btnOk");
+    const closeMark = document.getElementsByClassName("closeMark")[0];
+    const msg = document.getElementById("msg");
+    // メッセージの設定
+    msg.innerText = msgTxt;
+
+    // OK押下時
+    btnOk.onclick = function() {
+      modal.style.display = "none";
+      location.href = url;
+    }
+    // キャンセル押下時
+    btnCancel.onclick = function() {
+      modal.style.display = "none";
+    }
+    // 「x」押下時
+    closeMark.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    modal.style.display = "block";
+  }
+
+  function showModalDialog(msgTxt, url) {
+    const modal = document.getElementById('modalDialog');
+    const btnCancel = document.getElementById("btnCancel");
+    const btnOk = document.getElementById("btnOk");
+    const closeMark = document.getElementsByClassName("closeMark")[0];
+    const msg = document.getElementById("msg");
+    // メッセージの設定
+    msg.innerText = msgTxt;
+    btnCancel.style.visibility = "hidden";
+
+    // OK押下時
+    btnOk.onclick = function() {
+      modal.style.display = "none";
+      if (url) location.href = url;
+    }
+
+    // 「x」押下時
+    closeMark.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    modal.style.display = "block";
+  }
+  function logout() {
+    const message = "ログアウトしますがよろしいですか？";
+    const url = "[[@{/security/logout}]]";
+    showModalComfirmDialog(message, url);
+  }
+  function msgModal(msg, url) {
+    showModalDialog(msg, url);
+  }
+  function onclickUserName() {
+    const chkUserName = document.getElementById("chkUserName");
+    const btnLogout = document.getElementById("btnLogout");
+    const btnSettings = document.getElementById("btnSettings");
+    btnLogout.disabled = !chkUserName.checked;
+    btnSettings.disabled = !chkUserName.checked;
+
+  }
+  /*]]>*/
+</script>
+</head>
+
+<body th:data-context-path="@{/}">
+  <main>
+  <!-- contentsHeader -->
+  <div th:fragment="contentsHeader">
+    <contentsHeader id="contentsHeader"> <!-- Logo -->
+    <div id="logo">
+      <a id="nav-link--features" href="/inmane/top" style="text-decoration: none; color: black;"> <img th:src="@{/images/logo.svg}" width="40px" height="40px" style="vertical-align: middle;">
+        <span style="vertical-align: middle; padding-left: 5px; font-size: 22px;">
+          <b>-稼働状況管理-</b>
+        </span>
+      </a>
+    </div>
+    <!-- End Logo --> <!-- Modalダイアログ -->
+    <div id="modalDialog" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="closeMark" onclick="">&times;</span>
+        <p id="msg"></p>
+        <button id="btnOk">はい</button>
+        <button id="btnCancel">キャンセル</button>
+      </div>
+    </div>
+    <!-- Navigation -->
+    <div id="anavBar">
+      <!-- User -->
+      <div class="hidden_box">
+        <img th:src="@{/images/user-default.png}" width="30px" height="30px" style="vertical-align: middle;" /> <label for="chkUserName" th:if="${sessionUserName!=null}" th:text="${sessionUserName}"></label>
+        <label for="chkUserName" th:unless="${sessionUserName!=null}">anonymous</label>
+        <input type="checkbox" id="chkUserName" onclick="onclickUserName()" />
+        <div class="hiddenMenu" id="hiddenMenu">
+          <label for="btnLogout" style="color: #ffffff; background-color: #4169e1; padding: 5px;">ログアウト</label>
+          <input type="button" id="btnLogout" th:onclick="'javascript:logout()'" />
+          <label for="btnSettings" style="color: #ffffff; background-color: #4169e1; padding: 5px;">設定</label>
+          <input type="button" id="btnSettings" th:onclick="@{/settings}" />
+        </div>
+      </div>
+      <!-- End User -->
+    </div>
+    <!-- End Navigation --> </contentsHeader>
+  </div>
+  <!-- End contentsHeader --> <!-- contents -->
+  <div layout:fragment="contents"></div>
+  <!-- End contents --> <!-- Side Menu -->
+  <div th:fragment="sideMenu">
+    <sideMenu id="sideMenu">
+    <div
+      th:with="menus = ${ {'TOP', '稼働状況情報', '契約情報', 'スタッフ情報', '案件管理', '取引先管理', 'ユーザ管理'} }, 
+                paths = ${ {'__@{/top}__',
+                            '__@{/assignments}__',
+                            '__@{/contracts}__',
+                            '__@{/staffs}__',
+                            '__@{/projects}__',
+                            '__@{/clients}__',
+                            '__@{/maintenance/users/}__'
+                         } },
+                toPaths = ${ {'__@{/top}__',
+                             '__@{/assignments}__',
+                             '__@{/contracts}__',
+                             '__@{/staffs}__',
+                             '__@{/projects}__',
+                             '__@{/clients}__',
+                             '__@{/maintenance/users/search?roleName=ALL&nonDeleted=on}__'
+                         } },
+                roles   = ${ {'USER,ADMIN',
+                             'USER,ADMIN',
+                             'USER,ADMIN',
+                             'USER,ADMIN',
+                             'USER,ADMIN',
+                             'USER,ADMIN',
+                             'ADMIN'
+                         } },
+                uri   = ${#httpServletRequest.requestURI}">
+      <ul id="menu" class="menuLists" th:each="menu, status : ${menus}">
+        <li th:if="${#strings.contains(roles[__${status.index}__], sessionUserRole)}" th:with="bg=${#strings.contains(uri, paths[__${status.index}__])} ? 'background-color:#dda0dd;' : '' "><a
+          th:href="${toPaths[__${status.index}__]}" class="menu" th:style="${bg}">[[${menu}]]</a></li>
+      </ul>
+    </div>
+    </sideMenu>
+  </div>
+  <!-- End Side Menu --> <!-- Footer -->
+  <div th:fragment="footer">
+    <footer id="footer">
+      <div>
+        <small>&copy; Careritz & Partners. All Rights Reserved</small>
+      </div>
+    </footer>
+    <!-- End Footer -->
+    <a class="js-go-to u-go-to-v1" href="#!" data-type="fixed" data-position='{
+     "bottom": 15,
+     "right": 15
+   }' data-offset-top="400" data-compensation="#top" data-show-effect="zoomIn">
+    </a>
+  </div>
+  </main>
+  <div class="u-outer-spaces-helper"></div>
+</body>
+</html>

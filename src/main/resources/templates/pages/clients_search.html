@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>取引先管理</title>
+<meta th:include="common/layout.html::head" th:remove="tag"></meta>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div th:include="common/layout :: contentsHeader"></div>
+    </header>
+
+    <div class="container">
+      <div class="side">
+        <div th:include="common/layout :: sideMenu"></div>
+      </div>
+      <div class="main">
+        <div class="top">
+          <div class="boardTitle">取引先管理</div>
+        </div>
+        <div class="bottom"></div>
+      </div>
+
+    </div>
+
+    <footer>
+      <div th:include="common/layout :: footer"></div>
+    </footer>
+
+  </div>
+</body>
+</html>

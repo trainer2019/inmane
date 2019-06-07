@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CSSテスト</title>
+<meta th:include="common/layout.html::head" th:remove="tag"></meta>
+<style type="text/css">
+.wrapperSmpl {
+  margin: 0 auto;
+  border: 1px solid #0080ff;
+}
+header {
+  background: tomato;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+.container {
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+.main {
+  background: pink;
+  width: 85%;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+.side {
+  background: orange;
+  width: 15%;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+.top {
+  background: purple;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+.bottom {
+  background: green;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+}
+footer {
+  background: plum;
+  box-sizing: border-box;
+  border: 1px solid #FF9900;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+  text-align:center;
+}
+
+@media (max-width: 600px){
+  .container {
+    flex-direction: column;
+  }
+  .main,
+  .side {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrapperSmpl">
+  <header>header</header>
+
+  <div class="container">
+    <div class="side">side</div>
+    <div class="main">
+      <div class="top">top</div>
+      <div class="bottom">bottom</div>
+    </div>
+    
+  </div>
+
+  <footer>footer</footer>
+
+</div>
+</body>
+</html>
