@@ -1,34 +1,41 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta th:include="common/layout :: head" th:remove="tag"></meta>
+<link rel="stylesheet" th:href="@{/css/page/users.css}" />
 </head>
 
 <body th:data-context-path="@{/}">
   <main>
   <div th:fragment="tabs">
     <tabs id="tabs">
-    <!--/* ▼ タブ表示 */-->
-    <div
-      th:with="tabs  = ${ {'ユーザー検索', 'ユーザー登録'} }, 
-                    paths = ${ {'__@{/maintenance/users/search}__',
-                                '__@{/maintenance/users/new}__'
-                            } },
-                    toPaths = ${ {'__@{/maintenance/users/search}__',
+      <!--/* ▼ タブ表示 */-->
+      <div
+        th:with="tabs = ${ {'ユーザー検索', 'ユーザー登録'} }, 
+                      paths = ${ {'__@{/maintenance/users/search}__',
                                   '__@{/maintenance/users/new}__'
                               } },
-                    uri   = ${#httpServletRequest.requestURI}">
-      <!--/* 現在のURIを見て、タブの背景色が変わるようクラスを設定 */-->
-      <p class="tabs" th:each="tabNm, status : ${tabs}">
-        <a href="#" th:class="${#strings.contains(uri, paths[__${status.index}__])} ? 'tab' : 'tab_other'" 
-           th:data="${toPaths[__${status.index}__]}" 
-           th:onclick="window.location.href=this.getAttribute('data')">[[${tabNm}]]</a>
-      </p>
-    </div>
-    <!--/* ▲ タブ表示 */--> </tabs>
+                      toPaths = ${ {'__@{/maintenance/users/search?roleName=ALL&nonDeleted=on}__',
+                                    '__@{/maintenance/users/new}__'
+                                } },
+                      uri   = ${#httpServletRequest.requestURI}">
+        <ul class="nav nav-tabs" id="tab" role="tablist">
+          <div th:each="tabNm, status : ${tabs}">
+            <li class="nav-item">
+              <!--/* 現在のURIを見て、タブの背景色が変わるようクラスを設定 */-->
+              <a href="#" th:class="${#strings.contains(uri, paths[__${status.index}__])} ? 'nav-link active' : 'nav-link'" 
+                data-toggle="tab" role="tab" aria-controls="${toPaths[__${status.index}__]}" 
+                th:aria-selected="${#strings.contains(uri, paths[__${status.index}__])} ? 'true' : 'false'" 
+                th:data="${toPaths[__${status.index}__]}" 
+                th:onclick="window.location.href=this.getAttribute('data')">
+                <h5>[[${tabNm}]]</h5>
+              </a>
+            </li>
+          </div>
+        </ul>
+      </div>
+    <!--/* ▲ タブ表示 */-->
+    </tabs>
   </div>
   </main>
   <div class="u-outer-spaces-helper"></div>

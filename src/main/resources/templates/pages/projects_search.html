@@ -3,31 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <title>案件管理</title>
-<meta th:include="common/layout.html::head" th:remove="tag"></meta>
+<meta th:include="common/layout.html :: head" th:remove="tag"></meta>
 </head>
 <body>
   <div class="wrapper">
-    <header>
-      <div th:include="common/layout :: contentsHeader"></div>
-    </header>
+    <!--/* ▼ サイドメニュー表示 */-->
+    <div th:include="common/layout :: sideMenu"></div>
+    <!--/* ▲ サイドメニュー表示 */-->
 
     <div class="container">
-      <div class="side">
-        <div th:include="common/layout :: sideMenu"></div>
-      </div>
-      <div class="main">
-        <div class="top">
-          <div class="boardTitle">案件管理</div>
-        </div>
-        <div class="bottom"></div>
-      </div>
-
+      <header th:replace="common/layout :: header('案件管理')"></header>
     </div>
-
-    <footer>
-      <div th:include="common/layout :: footer"></div>
-    </footer>
-
   </div>
+  <!--/* ▼ フッター表示 */-->
+  <div th:include="common/layout :: footer"></div>
+  <!--/* ▲ フッター表示 */-->
 </body>
 </html>

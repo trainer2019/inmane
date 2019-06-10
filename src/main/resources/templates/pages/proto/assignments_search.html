@@ -6,83 +6,67 @@
 <meta th:include="common/layout.html::head" th:remove="tag"></meta>
 <link rel="stylesheet" th:href="@{/css/page/proto/assignments.css}" />
 
-<script type="text/javascript">
-  /*<![CDATA[*/
-  window.onload = function() {
-    document.getElementById('tData').onscroll = function() {
-      let target = document.getElementById('tData');
-      target.parentElement.querySelector('#tHeader').scrollLeft = target.scrollLeft; // データ部のスクロールをヘッダに反映
-    }
-  }
-  /*]]>*/
-</script>
 <style type="text/css">
 </style>
 </head>
 <body>
   <div class="wrapper">
-    <header>
-      <div th:include="common/layout :: contentsHeader"></div>
-    </header>
+    <!--/* ▼ サイドメニュー表示 */-->
+    <div th:include="common/layout :: sideMenu"></div>
+    <!--/* ▲ サイドメニュー表示 */-->
 
     <div class="container">
-      <div class="side">
-        <div th:include="common/layout :: sideMenu"></div>
+      <header th:replace="common/layout :: header('稼働状況')"></header>
+      
+      <div class="count" >
+        <!--/* ▼ 検索結果件数 */-->
+        <span th:text="'【検索結果：'+${#lists.size(assignmentsList)}+'件】'"></span>
+        <!--/* ▲ 検索結果件数 */-->
       </div>
-      <div class="main">
-        <div class="boardTitle">稼働状況</div>
+      <div class="dataList">
         <!--/* ▼ 検索結果リスト */-->
-          <div id="count">
-            <!--<span th:text="'【検索結果：'+${#lists.size(assignmentsList)}+'件】'"></span>-->
-          </div>
-          <div id="dataTable" class="dataTable">
-            <div id="tHeader">
-              <table class="t" name="tData">
-                <tr>
-                  <th>No.</th>
-                  <th>社員No.</th>
-                  <th>スタッフ名</th>
-                  <th>入社年月</th>
-                  <th>客先名</th>
-                  <th>案件名</th>
-                  <th>契約期間</th>
-                  <th>取引先担当</th>
-                </tr>
-              </table>
-            </div>
-
-            <div id="tData">
-              <table class="t" name="tData">
-                <tr th:if="assignment" th:each="assignment, assignmentStat:${assignmentsList}">
-                  <td th:text="${assignmentStat.count}"></td>
-                  <td th:text="${assignment.staffNo}"></td>
-                  <td th:text="${assignment.staffName}"></td>
-                  <td th:text="${#dates.format(assignment.joinedDate, 'yyyy/MM')}"></td>
-                  <td>
-                    <label class="ellipsis" th:text="${assignment.clientName}" th:title="${assignment.clientName}"></label>
-                  </td>
-                  <td th:text="${assignment.projectName}"></td>
-                  <td th:text="${#dates.format(assignment.contractPeriodFrom, 'yyyy/MM/dd')} 
-                      + '～'  + ${#dates.format(assignment.contractPeriodTo, 'yyyy/MM/dd')}" ></td>
-                  <td th:text="${assignment.salesStaffName}"></td>
-                  <!--/*<td>
-                    <label class="ellipsis" th:text="${assignment.assignmentName}" th:title="${assignment.assignmentName}"></label>
-                  </td>
-                  <td th:text="${assignment.roleName}"></td>
-                  <td>[[${assignment.deleted==1} ? '済' : '']]</td>
-                  <td th:text="${#dates.format(assignment.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
-                  <td th:text="${#dates.format(assignment.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>*/-->
-                </tr>
-              </table>
-            </div>
-          </div>
+        <table class="table table-hover" name="dataList" id="dataList">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>社員No.</th>
+              <th>スタッフ名</th>
+              <th>入社年月</th>
+              <th>客先名</th>
+              <th>案件名</th>
+              <th>契約期間</th>
+              <th>取引先担当</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:if="assignment" th:each="assignment, assignmentStat:${assignmentsList}">
+              <td th:text="${assignmentStat.count}"></td>
+              <td th:text="${assignment.staffNo}"></td>
+              <td th:text="${assignment.staffName}"></td>
+              <td th:text="${#dates.format(assignment.joinedDate, 'yyyy/MM')}"></td>
+              <td>
+                <label class="ellipsis" th:text="${assignment.clientName}" th:title="${assignment.clientName}"></label>
+              </td>
+              <td th:text="${assignment.projectName}"></td>
+              <td th:text="${#dates.format(assignment.contractPeriodFrom, 'yyyy/MM/dd')} 
+                  + '～'  + ${#dates.format(assignment.contractPeriodTo, 'yyyy/MM/dd')}" ></td>
+              <td th:text="${assignment.salesStaffName}"></td>
+              <!--/*<td>
+                <label class="ellipsis" th:text="${assignment.assignmentName}" th:title="${assignment.assignmentName}"></label>
+              </td>
+              <td th:text="${assignment.roleName}"></td>
+              <td>[[${assignment.deleted==1} ? '済' : '']]</td>
+              <td th:text="${#dates.format(assignment.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+              <td th:text="${#dates.format(assignment.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>*/-->
+            </tr>
+          </tbody>
+        </table>
         <!--/* ▲ 検索結果リスト */-->
       </div>
     </div>
-
-    <footer>
-      <div th:include="common/layout :: footer"></div>
-    </footer>
   </div>
+  <footer>
+    <div th:include="common/layout :: footer"></div>
+  </footer>
 </body>
 </html>

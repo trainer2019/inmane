@@ -7,28 +7,16 @@
 </head>
 <body>
   <div class="wrapper">
-    <header>
-      <!-- Contents Header -->
-      <div th:include="common/layout :: contentsHeader"></div>
-    </header>
+    <!--/* ▼ サイドメニュー表示 */-->
+    <div th:include="common/layout :: sideMenu"></div>
+    <!--/* ▲ サイドメニュー表示 */-->
 
     <div class="container">
-      <div class="side">
-        <div th:include="common/layout :: sideMenu"></div>
-      </div>
-      <div class="main">
-        <div class="top">
-          <div class="boardTitle">契約情報</div>
-        </div>
-        <div class="bottom"></div>
-      </div>
-
+      <header th:replace="common/layout :: header('契約情報')"></header>
     </div>
-
-    <footer>
-      <div th:include="common/layout :: footer"></div>
-    </footer>
-
   </div>
+  <!--/* ▼ フッター表示 */-->
+  <div th:include="common/layout :: footer"></div>
+  <!--/* ▲ フッター表示 */-->
 </body>
 </html>

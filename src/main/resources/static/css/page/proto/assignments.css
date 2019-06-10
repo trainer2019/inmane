@@ -4,120 +4,51 @@ ul li {
   list-style: none;
 }
 
+.boardArea {
+  background: #fff;
+  border: #c0c0c0 solid 1px;
+  border-top: none;
+  padding: 5px;
+  width: 100%;
+}
+
+.search_conditions {
+  white-space: nowrap;
+}
+
 .search_conditions td {
   border: 0px;
   white-space: nowrap;
   padding: 5px
 }
 
-/* 基本のテーブル定義 */
-table.t {
-  border: 1px solid #000000;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 14px
+.errorMessage {
+  color: red;
 }
 
-table.t td {
-  border: 1px solid #000000;
-  height: 14px;
+.dataList {
+  border: #c0c0c0 solid 1px;
 }
 
-table.t th {
-  border: 1px solid #000000;
-  font-size: 14px
-}
-
-table.t th {
-  background-color: #FFBB88;
-  color: #000000;
-}
-
-table.t tr:nth-child(odd)  td {
-  background-color: #C8C8E8;
-  color: #000000;
-}
-
-table.t tr:nth-child(even) td {
-  background-color: #E8E8FF;
-  color: #000000;
-}
-
-
-[name="tData"] {
+[name="dataList"] {
   white-space: nowrap;
+  background: #fff;
 }
 
-[name="tData"] th, [name="tData"] td {
-  width: 200px;
+[name="dataList"] tr:nth-child(odd)  td {
+  color: #000000;
 }
 
-[name="tData"] th:nth-child(1),
-[name="tData"] td:nth-child(1) {
-  width: 50px;
+[name="dataList"] tr:nth-child(even) td {
+  background-color: #f5f5f5;
+  color: #000000;
 }
 
-[name="tData"] th:nth-child(2),
-[name="tData"] td:nth-child(2),
-[name="tData"] th:nth-child(5),
-[name="tData"] td:nth-child(5) {
-  width: 80px;
+.table-hover tbody tr:hover>td, .table-hover tbody tr:hover>th {
+  background-color: #E8E8FF;
 }
 
-
-[name="tData"] th:nth-child(3),
-[name="tData"] td:nth-child(3) {
-  width: 120px;
-}
-
-[name="tData"] th:nth-child(4),
-[name="tData"] td:nth-child(4),
-[name="tData"] th:nth-child(8),
-[name="tData"] td:nth-child(8),
-[name="tData"] th:nth-child(9),
-[name="tData"] td:nth-child(9) {
-  width: 100px;
-}
-
-[name="tData"] th:nth-child(5),
-[name="tData"] td:nth-child(5),
-[name="tData"] th:nth-child(6),
-[name="tData"] td:nth-child(6),
-[name="tData"] th:nth-child(7),
-[name="tData"] td:nth-child(7) {
-  width: 180px;
-}
-
-
-
-[name="tData"] td:nth-child(1) {
-  text-align: center;
-}
-
-
-
-[name="tData"] .ellipsis {
-  display: block;
-  width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-#tHeader {
-}
-
-#tData {
-  overflow-y: scroll;
-  height: 100%;
-  border: 1px thin #000000;
-}
-
-#dataTable {
-  height: 400px;
-}
-#count {
-  height: 20px;
-  font-size: 14px;
-  margin : 5px 0px 3px 0px;
+.count {
+  height: 30px;
+  padding: 5px
 }

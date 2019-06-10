@@ -1,110 +1,86 @@
 @charset "UTF-8";
 
 ul li {
-  list-style: none;
+	list-style: none;
+}
+
+.boardArea {
+	background: #fff;
+	border: #c0c0c0 solid 1px;
+	border-top: none;
+	padding: 5px;
+	width: 100%;
+}
+
+.nav-tabs {
+	padding-top: 5px;
+	border-bottom: 1px solid #c0c0c0;
+}
+
+
+.nav-tabs .nav-link {
+	border-color: #c0c0c0 #c0c0c0 #c0c0c0;
+	display: block;
+	padding: .1rem .5rem;
+	background: #bcbcbc;
+	filter: alpha(opacity = 50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #c0c0c0 #c0c0c0 #fff;
+  filter: alpha(opacity = 100);
+  -moz-opacity: 1;
+  opacity: 1;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+	border-color: #1b8cfe #1b8cfe;
+	filter: alpha(opacity = 70);
+	-moz-opacity: 0.7;
+	opacity: 0.7;
+}
+
+.search_conditions {
+	white-space: nowrap;
 }
 
 .search_conditions td {
-  border: 0px;
-  white-space: nowrap;
-  padding: 5px
+	border: 0px;
+	white-space: nowrap;
+	padding: 5px
 }
 
-/* 基本のテーブル定義 */
-table.t {
-  border: 1px solid #000000;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 14px
+.errorMessage {
+	color: red;
 }
 
-table.t td {
-  border: 1px solid #000000;
-  height: 14px;
+.dataList {
+  border: #c0c0c0 solid 1px;
 }
 
-table.t th {
-  border: 1px solid #000000;
-  font-size: 14px
+[name="dataList"] {
+	white-space: nowrap;
+	background: #fff;
 }
 
-table.t th {
-  background-color: #FFBB88;
-  color: #000000;
+[name="dataList"] tr:nth-child(odd)  td {
+	color: #000000;
 }
 
-table.t tr:nth-child(odd)  td {
-  color: #000000;
+[name="dataList"] tr:nth-child(even) td {
+	background-color: #f5f5f5;
+	color: #000000;
 }
 
-table.t tr:nth-child(even) td {
-  background-color: #E8E8FF;
-  color: #000000;
+.table-hover tbody tr:hover>td, .table-hover tbody tr:hover>th {
+	background-color: #E8E8FF;
 }
 
-
-[name="tData"] {
-  white-space: nowrap;
-}
-
-[name="tData"] th, [name="tData"] td {
-  width: 200px;
-}
-
-[name="tData"] th:nth-child(1),
-[name="tData"] td:nth-child(1) {
-  width: 50px;
-}
-
-[name="tData"] th:nth-child(2),
-[name="tData"] td:nth-child(2),
-[name="tData"] th:nth-child(5),
-[name="tData"] td:nth-child(5) {
-  width: 120px;
-}
-
-
-[name="tData"] th:nth-child(3),
-[name="tData"] td:nth-child(3) {
-  width: 200px;
-}
-
-[name="tData"] th:nth-child(4),
-[name="tData"] td:nth-child(4),
-[name="tData"] th:nth-child(5),
-[name="tData"] td:nth-child(5) {
-  width: 50px;
-}
-
-[name="tData"] td:nth-child(1),
-[name="tData"] td:nth-child(4),
-[name="tData"] td:nth-child(5) {
-  text-align: center;
-}
-
-[name="tData"] .ellipsis {
-  display: block;
-  width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-#tHeader {
-}
-
-#tData {
-  overflow-y: scroll;
-  height: 100%;
-  width: 910px;
-  border: 1px thin #000000;
-}
-
-#dataTable {
-  height: 265px;
-}
-#count {
-  height: 20px;
-  font-size: 14px;
-  margin : 5px 0px 3px 0px;
+.count {
+	height: 30px;
+	padding: 5px
 }
