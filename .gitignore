@@ -3,7 +3,6 @@
 /bin/
 /lib/
 /logs/
-!gradle/wrapper/gradle-wrapper.jar
 
 *.class
 
@@ -12,8 +11,10 @@
 
 # Package Files #
 *.jar
+!gradle-wrapper.jar
 *.war
 *.ear
+
 
 #Gradle temporary files
 target/
