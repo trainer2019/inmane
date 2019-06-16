@@ -3,17 +3,6 @@
 <head>
 <title>ユーザ管理</title>
 <meta th:include="users_layout :: head" th:remove="tag"></meta>
-
-<script type="text/javascript">
-  /*<![CDATA[*/
-  window.onload = () => {
-    document.getElementById('tData').onscroll = () => {
-      let target = document.getElementById('tData');
-      target.parentElement.querySelector('#tHeader').scrollLeft = target.scrollLeft; // データ部のスクロールをヘッダに反映
-    }
-  }
-  /*]]>*/
-</script>
 </head>
 <body>
   <div class="wrapper">
@@ -55,7 +44,7 @@
               </tr>
               <tr>
                 <td colspan="1">
-                  <label for="nonDeleted">削除済を除外：</label>
+                  <label for="nonDeleted">利用不可を除外：</label>
                 </td>
                 <td colspan="2">
                   <input type="checkbox" name="nonDeleted" value="on" th:field="*{nonDeleted}" checked="checked" />
@@ -87,7 +76,7 @@
               <th>ユーザID</th>
               <th>ユーザ名</th>
               <th>権限</th>
-              <th>削除</th>
+              <th>利用可/不可</th>
               <th>最終更新日時</th>
               <th>登録日時</th>
             </tr>
@@ -102,7 +91,7 @@
                 <label class="ellipsis" th:text="${user.userName}" th:title="${user.userName}"></label>
               </td>
               <td>[[${'ADMIN'.equals(user.roleName)} ? '管理者' : (${'USER'.equals(user.roleName)} ? '一般' : 'ERROR')]]</td>
-              <td>[[${user.deleted==1} ? '済' : '']]</td>
+              <td>[[${user.deleted==1} ? '不可' : '可']]</td>
               <td th:text="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
               <td th:text="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
             </tr>

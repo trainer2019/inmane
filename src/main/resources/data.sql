@@ -1,4 +1,4 @@
--- USERS サンプルデータ
+-- USERS サンプルデータ　※パスワードは全ユーザ「demo」で設定。
 INSERT INTO USERS VALUES ('0000000001', '$2a$10$oxSJl.keBwxmsMLkcT9lPeAIxfNTPNQxpeywMrF7A3kVszwUTqfTK', 'デモユーザ１', 'USER' , 0, null, 0, null, null, '9999999999', '2019/03/01 12:54:27');
 INSERT INTO USERS VALUES ('0000000002', '$2a$10$oxSJl.keBwxmsMLkcT9lPeAIxfNTPNQxpeywMrF7A3kVszwUTqfTK', 'デモユーザ２', 'USER' , 0, null, 0, null, null, '9999999999', '2019/03/01 12:54:27');
 INSERT INTO USERS VALUES ('0000000003', '$2a$10$oxSJl.keBwxmsMLkcT9lPeAIxfNTPNQxpeywMrF7A3kVszwUTqfTK', 'デモユーザ３', 'USER' , 0, null, 0, null, null, '9999999999', '2019/03/01 12:54:27');

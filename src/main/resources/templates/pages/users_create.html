@@ -10,11 +10,7 @@
     let pw = document.getElementById("password");
     let pwCheck = document.getElementById("password-check");
 
-    if (pwCheck.checked) {
-      pw.setAttribute("type", "text");
-    } else {
-      pw.setAttribute("type", "password");
-    }
+    pw.setAttribute("type", pwCheck.checked ? "text" : "password");
   }
   function showMsg() {
     let msgEl = document.getElementById("appCompleteMessage");
@@ -29,6 +25,12 @@
   }
 
   window.onload = showMsg;
+  
+  (function () {
+    $("createForm").on("submit", function onsubmit (event) {
+      $(this).off("submit", onsubmit).on("submit", false);
+    });
+  })();
 /*]]>*/
 </script>
 </head>
@@ -51,10 +53,10 @@
         </div>
         <div class="tab">
           <div class="boardArea" th:style="${isNew}==true ? 'border-top: none;' : 'border-top: #c0c0c0 solid 1px;'">
-            <form method="post" th:object="${usersCreateForm}" th:action="${isNew or isDetail} ? '' : '__@{/maintenance/users/edit}__'">
+            <form id="createForm" method="post" th:object="${usersCreateForm}" th:action="${isNew or isDetail} ? '' : '__@{/maintenance/users/edit}__'">
               <input type="hidden" id="appCompleteMessage" th:value='${appCompleteMessage}' />
-              <span class="errorMessage" th:text="${createFailureMessage}" 
-                th:style="${createFailureMessage!=null} ? 'display:' : 'display:none'">error</span>
+              <span th:value='${appCompleteMessage}' />
+              <span th:if="${createFailureMessage!=null}" class="errorMessage" th:text="${createFailureMessage}" >error</span>
               <table>
                 <tr>
                   <td style="width: 150px; text-align: left; vertical-align: top; padding: 5px;">
@@ -123,9 +125,16 @@
                     </td>
                   </tr>
                   <tr>
-                    <td style="width: 150px; text-align: left; padding: 5px; vertical-align: top;">削除</td>
+                    <td style="width: 150px; text-align: left; padding: 5px; vertical-align: top;">利用可/不可</td>
                     <td colspan="3">
-                      <label>[[*{deleted==1 ? '済' : ''}]]</label>
+                      <label th:if="${isDetail}">[[*{deleted==1 ? '不可' : '可'}]]</label>
+                      <div th:if="${isEdit}">
+                        <input  type="checkbox" id="delete" 
+                          name="deleted"  th:field="*{deleted}" value="1" th:checked="*{deleted==1 ? 'checked' : null}" />
+                        <input th:if="${isEdit}" type="hidden" name="!deleted" value="0" />
+                        <br />
+                        <label style="font-size: 12px;">※チェック有の場合は利用不可、チェック無の場合は利用可として更新ができます。</label>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -162,7 +171,7 @@
                       th:userId="*{userId}"
                       th:onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
                     <button th:unless="${isNew}" type="button"
-                      th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonDeleted=true'
+                      th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonDeleted=on'
                                    : @{/maintenance/users/detail} +'?userId=' + *{userId}"
                       th:onclick="location.href=this.getAttribute('data')">戻る</button>
                   </td>

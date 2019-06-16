@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.careritz.inmane.controller.commons.AbstractAppController;
 
+/**
+ * 取引先管理コントローラ.
+ */
 @Controller
 public class ClientsController extends AbstractAppController {
   @RequestMapping(value = "clients", method = RequestMethod.GET)

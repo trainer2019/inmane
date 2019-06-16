@@ -3,6 +3,9 @@ package jp.co.careritz.inmane.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+/**
+ * ユーザ情報DTO.
+ */
 public class UsersDto implements Serializable {
 
   /** シリアルバージョンUID. */

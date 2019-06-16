@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 /**
- * ログインフォーム.
+ * ユーザ情報検索用フォーム.
  */
 public class UsersSearchForm {
 
@@ -12,7 +12,7 @@ public class UsersSearchForm {
   private String userId;
   /** ユーザ名. */
   private String userName;
-  
+
   @NotEmpty(message = "必須入力の項目です。")
   @Pattern(regexp = "ALL|USER|ADMIN", message = "不正な値が設定されています。")
   private String roleName;

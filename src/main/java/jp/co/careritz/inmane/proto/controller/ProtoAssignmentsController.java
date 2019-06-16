@@ -10,24 +10,27 @@ import jp.co.careritz.inmane.controller.commons.AbstractAppController;
 import jp.co.careritz.inmane.proto.dto.AssignmentsDto;
 import jp.co.careritz.inmane.proto.service.AssignmentsService;
 
+/**
+ * プロト稼働状況情報コントローラ.
+ */
 @Controller
 public class ProtoAssignmentsController extends AbstractAppController {
-  
+
   @Autowired
   AssignmentsService assignmentsService;
-  
+
   @RequestMapping(value = "proto/assignments", method = RequestMethod.GET)
   String showProtoStaffList(Model model) {
-    //    System.out.println("### userId:" + form.getUserId());
-    //    System.out.println("### userName:" + form.getUserName());
-    //    System.out.println("### roleName:" + form.getRoleName());
-    //    System.out.println("### nonDeleted:" + form.getNonDeleted());
-    
-    //    AssignmentsDto dto = new AssignmentsDto();
+    // System.out.println("### userId:" + form.getUserId());
+    // System.out.println("### userName:" + form.getUserName());
+    // System.out.println("### roleName:" + form.getRoleName());
+    // System.out.println("### nonDeleted:" + form.getNonDeleted());
+
+    // AssignmentsDto dto = new AssignmentsDto();
     //
-    //    dto.setUserId(form.getUserId());
-    //    dto.setUserName(form.getUserName());
-    //    dto.setRoleName("ALL".equals(form.getRoleName()) ? "" : form.getRoleName());
+    // dto.setUserId(form.getUserId());
+    // dto.setUserName(form.getUserName());
+    // dto.setRoleName("ALL".equals(form.getRoleName()) ? "" : form.getRoleName());
 
     List<AssignmentsDto> assignments = assignmentsService.find();
 

@@ -1,15 +1,17 @@
 @charset "UTF-8";
 
-@import
-	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap";
+
+body, html {
+  font-family: 'Noto Sans JP', sans-serif!important;
+  height: 100%;
+}
 
 body {
-	font-family: 'Poppins', sans-serif;
 	background: #fafafa;
 }
 
 p {
-	font-family: 'Poppins', sans-serif;
 	font-size: 1.1em;
 	font-weight: 300;
 	line-height: 1.7em;
@@ -66,7 +68,7 @@ h5 {
 #sidebar {
 	min-width: 250px;
 	max-width: 250px;
-	background: #647ad2;
+	background: #5e75d0;
 	color: #fff;
 	transition: all 0.3s;
 }
@@ -80,8 +82,13 @@ h5 {
 	background: #4252bd;
 }
 
+#sidebar ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 #sidebar ul li a {
-	padding: 6px;
+	padding: 12px;
 	font-size: 1.1em;
 	display: block;
 	color: #fff;

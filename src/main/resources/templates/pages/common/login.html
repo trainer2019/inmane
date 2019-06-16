@@ -3,45 +3,46 @@
 <head>
 <meta charset="UTF-8" />
 <title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta th:include="common/layout :: head" th:remove="tag"></meta>
-</head>
-<body style="text-align: center;">
-  <div>
-    <h2>
-      <img src="../static/images/logo.svg" th:src="@{images/logo.svg}" width="70px" height="70px">In Mane -稼働状況管理システム-
-    </h2>
-  </div>
-  <br />
-  <p th:if="${loginFailureMessage!=null or loginFailureMessage!=''}" th:text="${loginFailureMessage}" style="color: red;"></p>
-  <form th:action="@{/security/login}" method="POST" style="display: inline-block; height: 88%;">
-    <div style="border: #d0d0d0 solid 1px;">
-      <!--/* ダイアログメッセージ */-->
-      <table style="padding: 30px;">
-        <tr>
-          <td>
-            <label for="userId">ユーザID:</label>
-          </td>
-          <td>
-            <input type="text" id="userId" name="userId" value="" maxlength="10" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="password">パスワード:</label>
-          </td>
-          <td>
-            <input type="password" id="password" name="password" value="" maxlength="20" />
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td style="text-align: right;">
-            <button type="submit">ログイン</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </form>
-</body>
+<link rel="stylesheet" th:href="@{/css/page/login.css}" />
+<script>
 
+</script>
+<style>
+
+</style>
+</head>
+  <body class="bg-image">
+      <div class="bg-mask fadein">
+        <div class="page-header text-center" style="padding-top:25px;">
+          <h2>
+            <img th:src="@{images/logo.svg}" width="70px" height="70px" style="padding:5px;">
+            In Mane -稼働状況管理システム-
+          </h2>
+        </div>
+        <br />
+        <div class="container">
+          <div class="card card-container">
+            <div class="box">
+              <form th:action="@{/security/login}" method="POST" >
+                <!--/* ダイアログメッセージ */-->
+                <div class="form-group">
+                  <label for="userId" class="control-label">ユーザID</label>
+                  <input type="text" id="userId" class="form-control" name="userId" placeholder="UserId" maxlength="10"  required/>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="control-label">パスワード</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="20" required/>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-info btn-block">ログイン</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </body>
 </html>

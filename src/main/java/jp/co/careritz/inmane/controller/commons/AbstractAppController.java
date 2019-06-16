@@ -1,12 +1,10 @@
 package jp.co.careritz.inmane.controller.commons;
 
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import jp.co.careritz.inmane.config.PropertyConfig;
 import jp.co.careritz.inmane.model.security.SecurityUserModel;
 
 
@@ -15,13 +13,6 @@ import jp.co.careritz.inmane.model.security.SecurityUserModel;
  */
 @Controller
 public abstract class AbstractAppController {
-
-  // --------------------------------------------------------------------------
-  // インスタンス変数
-  // --------------------------------------------------------------------------
-  /** プロパティ設定. */
-  @Autowired
-  protected PropertyConfig propertyConfig;
 
   // --------------------------------------------------------------------------
   // 共通定義

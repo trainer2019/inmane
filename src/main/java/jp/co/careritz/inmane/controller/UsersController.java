@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.support.SessionFlashMapManager;
 import jp.co.careritz.inmane.config.PropertyConfig;
 import jp.co.careritz.inmane.controller.commons.AbstractAppController;
 import jp.co.careritz.inmane.dto.UsersDto;
@@ -29,6 +27,9 @@ import jp.co.careritz.inmane.form.UsersSearchForm;
 import jp.co.careritz.inmane.model.security.SecurityUserModel;
 import jp.co.careritz.inmane.service.UsersService;
 
+/**
+ * ユーザ管理コントローラ.
+ */
 @Controller
 @RequestMapping("maintenance/users")
 public class UsersController extends AbstractAppController {
@@ -40,7 +41,8 @@ public class UsersController extends AbstractAppController {
   private PropertyConfig propertyConfig;
   @Autowired
   UsersService usersService;
-
+  // ロガー
+  static Logger log = LoggerFactory.getLogger(UsersController.class);
   // ----------------------------------------------------------------------
   // インスタンスメソッド
   // ----------------------------------------------------------------------
@@ -54,10 +56,12 @@ public class UsersController extends AbstractAppController {
    */
   @GetMapping("search")
   public String viewSearch(@ModelAttribute UsersSearchForm form, Model model) {
-    System.out.println("### userId:" + form.getUserId());
-    System.out.println("### userName:" + form.getUserName());
-    System.out.println("### roleName:" + form.getRoleName());
-    System.out.println("### nonDeleted:" + form.getNonDeleted());
+    if (log.isTraceEnabled()) {
+      log.debug("userId:" + form.getUserId());
+      log.debug("userName:" + form.getUserName());
+      log.debug("roleName:" + form.getRoleName());
+      log.debug("nonDeleted:" + form.getNonDeleted());
+    }
 
     UsersDto dto = new UsersDto();
 
@@ -125,21 +129,16 @@ public class UsersController extends AbstractAppController {
 
     int result = usersService.create(dto);
 
-    FlashMap flashMap = RequestContextUtils.getOutputFlashMap(req);
-    FlashMapManager flashMapManager = new SessionFlashMapManager();
-
     if (result == 0) {
       String msg = propertyConfig.get("ok.app.complete");
-      // Flashスコープで画面に表示するエラーメッセージを設定
-      flashMap.put("appCompleteMessage", msg);
-      flashMapManager.saveOutputFlashMap(flashMap, req, res);
+      // 画面に表示するエラーメッセージを設定
+      model.addAttribute("appCompleteMessage", msg);
     } else {
       String errMsg = (result == 1) ? propertyConfig.get("error.app.user.deplicated")
           : propertyConfig.get("error.app.fatal");
-      // Flashスコープで画面に表示するエラーメッセージを設定
-      flashMap.put("createFailureMessage", errMsg);
-      flashMapManager.saveOutputFlashMap(flashMap, req, res);
-
+      // エラーメッセージを設定
+      model.addAttribute("createFailureMessage", errMsg);
+      // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
       return "users_create";
     }
@@ -246,28 +245,24 @@ public class UsersController extends AbstractAppController {
     dto.setPassword(password);
     dto.setUserName(form.getUserName());
     dto.setRoleName(form.getRoleName());
-    dto.setDeleted(0);
+    dto.setDeleted(form.getDeleted());
     dto.setUpdaterId(userDetails.getUserId());
     dto.setUpdatedAt(now);
 
     int result = usersService.updateByPk(dto);
 
-    FlashMap flashMap = RequestContextUtils.getOutputFlashMap(req);
-    FlashMapManager flashMapManager = new SessionFlashMapManager();
-
     if (result == 0) {
       String msg = propertyConfig.get("ok.app.complete");
-      // Flashスコープで画面に表示するエラーメッセージを設定
-      flashMap.put("appCompleteMessage", msg);
-      flashMapManager.saveOutputFlashMap(flashMap, req, res);
+      // 画面に表示するエラーメッセージを設定
+      model.addAttribute("appCompleteMessage", msg);
     } else {
       String errMsg = (result == 1) ? propertyConfig.get("error.app.user.deplicated")
           : propertyConfig.get("error.app.fatal");
-      // Flashスコープで画面に表示するエラーメッセージを設定
-      flashMap.put("createFailureMessage", errMsg);
-      flashMapManager.saveOutputFlashMap(flashMap, req, res);
-
+      // エラーメッセージを設定
+      model.addAttribute("createFailureMessage", errMsg);
+      // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
+
       return "users_create";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();

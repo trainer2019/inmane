@@ -8,14 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import jp.co.careritz.inmane.common.dao.BaseDao;
 import jp.co.careritz.inmane.proto.dto.AssignmentsDto;
+import jp.co.careritz.inmane.util.DataSourceProperty;
 
+/**
+ * 稼働状況情報DAO.
+ */
 @Repository
-public class AssignmentsDao extends BaseDao {
+public class AssignmentsDao {
 
-
+  @Autowired
+  DataSourceProperty dsProp;
 
   /**
    * 稼働状況情報を取得する.
@@ -24,10 +29,10 @@ public class AssignmentsDao extends BaseDao {
    */
   public List<AssignmentsDto> select() {
     // DBの接続情報をプロパティから取得
-    String driverName = this.getDriverName();
-    String jdbcUrl = this.getJdbcUrl();
-    String dsUserName = this.getDsUserName();
-    String dsPassword = this.getDsPassword();
+    String driverName = dsProp.getDriverName();
+    String jdbcUrl = dsProp.getJdbcUrl();
+    String dsUserName = dsProp.getDsUserName();
+    String dsPassword = dsProp.getDsPassword();
 
     Connection con = null;
     ResultSet rs = null;
