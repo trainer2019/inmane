@@ -1,7 +1,7 @@
 package jp.co.careritz.inmane.constant;
 
 /**
- * アプリケーション共通定数定義
+ * アプリケーション共通定数定義.
  */
 public class AppConst {
 
