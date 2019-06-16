@@ -35,6 +35,11 @@ public class PropertyConfig {
    * @return プロパティ値
    */
   public String get(String key, Object... args) {
-    return MessageFormat.format(env.getProperty(key), args);
+    final String prop = env.getProperty(key);
+    if (prop != null) {
+      return MessageFormat.format(prop, args);
+    } else {
+      return "";
+    }
   }
 }
