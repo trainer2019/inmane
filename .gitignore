@@ -2,6 +2,7 @@
 /build/
 /bin/
 /lib/
+/log/
 !gradle/wrapper/gradle-wrapper.jar
 
 *.class
