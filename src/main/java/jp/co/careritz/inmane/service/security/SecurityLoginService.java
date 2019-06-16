@@ -3,6 +3,8 @@ package jp.co.careritz.inmane.service.security;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,13 +31,14 @@ public class SecurityLoginService implements UserDetailsService {
   private PropertyConfig propertyConfig;
   @Autowired
   private UsersService usersService;
+  // ロガー
+  static Logger log = LoggerFactory.getLogger(SecurityLoginService.class);
 
   // ----------------------------------------------------------------------
   // インスタンスメソッド
   // ----------------------------------------------------------------------
   @Override
-  public UserDetails loadUserByUsername(String userid)
-      throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
 
     /* ---------------------------------------------------- */
     /* ローカル変数の宣言と初期化 */
@@ -55,8 +58,8 @@ public class SecurityLoginService implements UserDetailsService {
     /* 認証処理 */
     /* ---------------------------------------------------- */
     if (usersDto != null) {
-      System.out.println("### userDto.userId:" + usersDto.getUserId());
-      System.out.println("### userDto.roleName:" + usersDto.getRoleName());
+      log.debug("userDto.userId:" + usersDto.getUserId());
+      log.debug("userDto.roleName:" + usersDto.getRoleName());
       // ログイン認証情報に社員情報をコピー
       BeanUtils.copyProperties(usersDto, user);
 
