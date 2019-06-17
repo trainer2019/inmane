@@ -76,7 +76,7 @@ public class UsersDao {
         }
       }
     } catch (SQLException e) {
-      log.error("想定外エラー", e);
+      log.error("{error.app.log.unexpected}", e);
     }
     // 呼び出し元に取得結果を返却
     return dto;
@@ -144,7 +144,7 @@ public class UsersDao {
       }
 
     } catch (SQLException e) {
-      log.error("想定外エラー", e);
+      log.error("{error.app.log.unexpected}", e);
     }
     // 呼び出し元に取得結果を返却
     return users;
@@ -218,10 +218,10 @@ public class UsersDao {
       int errCode = e.getErrorCode();
       log.debug("SQLException#getErrorCode = " + errCode);
       if (errCode == 1) {
-        log.error("一意制約エラー", e);
+        log.error("{error.app.log.db.uniqueConstraint}", e);
         return 1;
       } else {
-        log.error("想定外エラー", e);
+        log.error("{error.app.log.unexpected}", e);
         return 9;
       }
     }
@@ -291,10 +291,10 @@ public class UsersDao {
       int errCode = e.getErrorCode();
       log.debug("SQLException#getErrorCode = " + errCode);
       if (errCode == 1) {
-        log.error("一意制約エラー", e);
+        log.error("{error.app.log.db.uniqueConstraint}", e);
         return 1;
       } else {
-        log.error("想定外エラー", e);
+        log.error("{error.app.log.unexpected}", e);
         return 9;
       }
     }

@@ -101,9 +101,9 @@
                     <label class="required">権限</label>
                   </td>
                   <td colspan="3" th:if="${isNew or isEdit}">
-                    <input id="radioUser" type="radio" name="roleName" value="USER" th:field="*{roleName}" checked="checked">
+                    <input id="radioUser" type="radio" value="USER" th:field="*{roleName}" checked="checked">
                     ユーザー
-                    <input id="radioAdmin" type="radio" name="roleName" value="ADMIN" th:field="*{roleName}">
+                    <input id="radioAdmin" type="radio" value="ADMIN" th:field="*{roleName}">
                     管理者
                   </td>
                   <td colspan="3" th:if="${isDetail}" th:with="role=*{roleName}">
@@ -129,8 +129,7 @@
                     <td colspan="3">
                       <label th:if="${isDetail}">[[*{deleted==1 ? '不可' : '可'}]]</label>
                       <div th:if="${isEdit}">
-                        <input  type="checkbox" id="delete" 
-                          name="deleted"  th:field="*{deleted}" value="1" th:checked="*{deleted==1 ? 'checked' : null}" />
+                        <input type="checkbox" id="delete" th:field="*{deleted}" value="1" th:checked="*{deleted==1 ? 'checked' : null}" />
                         <input th:if="${isEdit}" type="hidden" name="!deleted" value="0" />
                         <br />
                         <label style="font-size: 12px;">※チェック有の場合は利用不可、チェック無の場合は利用可として更新ができます。</label>

@@ -1,6 +1,7 @@
 package jp.co.careritz.inmane.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +57,8 @@ public class UsersController extends AbstractAppController {
    * @return ユーザ検索画面
    */
   @GetMapping("search")
-  public String viewSearch(@ModelAttribute UsersSearchForm form, Model model) {
+  public String viewSearch(Model model, @ModelAttribute @Valid UsersSearchForm form,
+      BindingResult bindingResult) {
     if (log.isTraceEnabled()) {
       log.debug("userId:" + form.getUserId());
       log.debug("userName:" + form.getUserName());
@@ -64,13 +66,20 @@ public class UsersController extends AbstractAppController {
       log.debug("nonDeleted:" + form.getNonDeleted());
     }
 
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("UsersSearchForm", form);
+      model.addAttribute("usersList", new ArrayList<UsersDto>());
+      return "users_search";
+    }
+
     UsersDto dto = new UsersDto();
 
     dto.setUserId(form.getUserId());
     dto.setUserName(form.getUserName());
-    dto.setRoleName("ALL".equals(form.getRoleName()) ? "" : form.getRoleName());
+    dto.setRoleName(AppConst.ROLE_NAME_ALL.equals(form.getRoleName()) ? "" : form.getRoleName());
 
-    List<UsersDto> usersList = usersService.find(dto, "on".equals(form.getNonDeleted()));
+    List<UsersDto> usersList =
+        usersService.find(dto, AppConst.NON_DELETED_ON.equals(form.getNonDeleted()));
 
     // 検索条件を設定
     model.addAttribute("usersSearchForm", form);

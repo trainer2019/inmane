@@ -11,17 +11,19 @@ import javax.validation.constraints.Size;
 public class UsersCreateForm {
 
   /** ユーザID. */
-  @NotEmpty(message = "必須入力の項目です。")
-  @Pattern(regexp = "[a-zA-Z0-9]*", message = "半角英数字である必要があります。")
+  @NotEmpty(message = "{errors.validation.Required.message}")
+  @Size(min = 5, max = 10, message = "{errors.validation.SizeRange.message}")
+  @Pattern(regexp = "[a-zA-Z0-9]*", message = "{errors.validation.HalfWidthAlphanumeric.message}")
   private String userId;
   /** パスワード. */
-  @Pattern(regexp = "[a-zA-Z0-9]*", message = "半角英数字である必要があります。")
+  @Pattern(regexp = "[a-zA-Z0-9]*", message = "{errors.validation.HalfWidthAlphanumeric.message}")
+  @Size(min = 4, max = 10, message = "{errors.validation.SizeRange.message}")
   private String password;
   /** ユーザ名. */
-  @Size(min = 1, max = 20, message = "{min}文字以上{max}文字以下で入力してください。")
+  @Size(min = 1, max = 20, message = "{errors.validation.SizeRange.message}")
   private String userName;
   /** ロール名. */
-  @NotEmpty(message = "必須入力の項目です。")
+  @NotEmpty(message = "{errors.validation.Required.message}")
   @Pattern(regexp = "USER|ADMIN")
   private String roleName;
   /** ログイン失敗回数. */

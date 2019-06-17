@@ -20,39 +20,55 @@
           <form method="get" action="#" th:action="@{/maintenance/users/search}" th:object="${usersSearchForm}">
             <table class="search_conditions">
               <tr>
-                <td colspan="3">
-                  <input type="text" id="searchUserId" name="userId" th:field="*{userId}" placeholder="ユーザID" maxlength="10" size="30" />
+                <td colspan="2">
+                  <input type="text" id="searchUserId" th:field="*{userId}" placeholder="ユーザID" maxlength="10" size="30" />
+                </td>
+                <td colspan="1">
+                  <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" style="color: red;">error!</span>
                 </td>
               </tr>
               <tr>
-                <td colspan="3">
-                  <input type="text" id="searchUserName" name="userName" th:field="*{userName}" placeholder="ユーザ名" maxlength="20" size="30" />
+                <td colspan="2">
+                  <input type="text" id="searchUserName" th:field="*{userName}" placeholder="ユーザ名" maxlength="20" size="30" />
+                </td>
+                <td colspan="1">
+                  <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: red;">error!</span>
                 </td>
               </tr>
               <tr>
                 <td colspan="1">
                   <label>ユーザ権限：</label>
                 </td>
-                <td colspan="2">
-                  <input id="radioAll" type="radio" name="roleName" value="ALL" th:field="*{roleName}" checked="checked">
+                <td colspan="1">
+                  <input id="radioAll" type="radio" value="ALL" th:field="*{roleName}" checked="checked">
                   全て
-                  <input id="radioUser" type="radio" name="roleName" value="USER" th:field="*{roleName}">
+                  <input id="radioUser" type="radio" value="USER" th:field="*{roleName}">
                   一般
-                  <input id="radioAdmin" type="radio" name="roleName" value="ADMIN" th:field="*{roleName}">
+                  <input id="radioAdmin" type="radio" value="ADMIN" th:field="*{roleName}">
                   管理者
+                </td>
+                <td colspan="1">
+                  <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" style="color: red;">error!</span>
                 </td>
               </tr>
               <tr>
                 <td colspan="1">
                   <label for="nonDeleted">利用不可を除外：</label>
                 </td>
-                <td colspan="2">
-                  <input type="checkbox" name="nonDeleted" value="on" th:field="*{nonDeleted}" checked="checked" />
+                <td colspan="1">
+                  <input type="checkbox" value="on" th:field="*{nonDeleted}" checked="checked" />
+                </td>
+                <td colspan="1">
+                  <span th:if="${#fields.hasErrors('nonDeleted')}" th:errors="*{nonDeleted}" style="color: red;">error!</span>
                 </td>
               </tr>
               <tr>
-                <td colspan="3" style="text-align: right;">
+                <td colspan="1">
+                </td>
+                <td colspan="1" style="text-align: right;">
                   <button type="submit">検索</button>
+                </td>
+                <td colspan="1">
                 </td>
               </tr>
             </table>
