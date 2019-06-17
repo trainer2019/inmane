@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import jp.co.careritz.inmane.constant.AppConst;
 import jp.co.careritz.inmane.service.security.SecurityLoginFailureHandler;
 import jp.co.careritz.inmane.service.security.SecurityLoginProvider;
 import jp.co.careritz.inmane.service.security.SecurityLoginService;
@@ -61,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         // ログイン、セキュリティ認証、エラー画面以外は認証が必要
         .antMatchers("/login/**", "/security/**", "/api/**", "/error/**").permitAll()
-        .mvcMatchers("/maintenance/**").hasAuthority("ADMIN")
+        .mvcMatchers("/maintenance/**").hasAuthority(AppConst.ROLE_NAME_ADMIN)
         // .antMatchers("/maintenance/").hasRole("ADMIN") // ADMIN権限がないとアクセスできないURL
         .anyRequest().authenticated() // /js、/css以外へのアクセスに対しては認証を要求
         .and()
@@ -81,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutRequestMatcher(new AntPathRequestMatcher("/security/logout"));
 
   }
-  
+
   /**
    * configure of AuthenticationManagerBuilder.
    */
@@ -89,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(loginProvider());
   }
-  
+
   /**
    * loginProvider.
    */

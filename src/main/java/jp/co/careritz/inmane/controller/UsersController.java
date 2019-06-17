@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jp.co.careritz.inmane.config.PropertyConfig;
+import jp.co.careritz.inmane.constant.AppConst;
 import jp.co.careritz.inmane.controller.commons.AbstractAppController;
 import jp.co.careritz.inmane.dto.UsersDto;
 import jp.co.careritz.inmane.form.UsersCreateForm;
@@ -90,7 +91,7 @@ public class UsersController extends AbstractAppController {
   public String viewCreate(Model model) {
 
     UsersCreateForm form = new UsersCreateForm();
-    form.setRoleName("USER");
+    form.setRoleName(AppConst.ROLE_NAME_USER);
 
     model.addAttribute("usersCreateForm", form);
 
