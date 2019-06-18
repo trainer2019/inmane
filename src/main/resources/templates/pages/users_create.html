@@ -70,7 +70,7 @@
                   </div>
                   <div th:unless="${isDetail}">
                   <td colspan="1">
-                    <input type="text" th:type="${isEdit ? 'hidden' : 'text'}" th:field="*{userId}" size="15" maxlength="10" placeholder="半角英数5~10文字" required />
+                    <input type="text" th:type="${isEdit ? 'hidden' : 'text'}" th:field="*{userId}" size="15" maxlength="10" placeholder="半角英数5～10文字" required />
                   </td>
                   <td colspan="1">
                     <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" style="color: red;">error!</span>
@@ -86,7 +86,7 @@
                   <td th:unless="${isDetail}" colspan="1">
                     <label th:if="${isNew}" style="font-size: 12px;">※初期パスワードは「共通キーワード＋ユーザID」になります。</label>
                     <div th:if="${isEdit}">
-                      <input th:if="${isEdit}" id="password" type="text" th:field="*{password}" size="15" maxlength="15" placeholder="半角英数5~10文字" />
+                      <input th:if="${isEdit}" id="password" type="text" th:field="*{password}" size="15" maxlength="15" placeholder="半角英数5～10文字" />
                       <br />
                       <input type="checkbox" id="password-check" onchange="pwCheckOnchangeHandler()" />
                       <label>パスワードを表示する</label> <br /> <label style="font-size: 12px;">※入力がある場合のみパスワードを再設定します。</label>
