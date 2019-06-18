@@ -43,7 +43,7 @@ ul li {
 	-moz-opacity: 0.7;
 	opacity: 0.7;
 }
-
+/* 検索 */
 .search_conditions {
 	white-space: nowrap;
 }
@@ -83,4 +83,11 @@ ul li {
 .count {
 	height: 30px;
 	padding: 5px
+}
+/* 登録・詳細 */
+.h_data {
+	width: 150px;
+	text-align: left;
+	vertical-align: top;
+	padding: 5px;
 }

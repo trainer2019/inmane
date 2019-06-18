@@ -4,6 +4,7 @@ import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import jp.co.careritz.inmane.validator.SizeIfNotNull;
 
 /**
  * ユーザ情報登録用フォーム.
@@ -17,14 +18,14 @@ public class UsersCreateForm {
   private String userId;
   /** パスワード. */
   @Pattern(regexp = "[a-zA-Z0-9]*", message = "{errors.validation.HalfWidthAlphanumeric.message}")
-  @Size(min = 4, max = 10, message = "{errors.validation.SizeRange.message}")
+  @SizeIfNotNull(min = 4, max = 10, message = "{errors.validation.SizeRange.message}")
   private String password;
   /** ユーザ名. */
   @Size(min = 1, max = 20, message = "{errors.validation.SizeRange.message}")
   private String userName;
   /** ロール名. */
   @NotEmpty(message = "{errors.validation.Required.message}")
-  @Pattern(regexp = "USER|ADMIN")
+  @Pattern(regexp = "USER|ADMIN", message = "{errors.validation.IllegalData.message}")
   private String roleName;
   /** ログイン失敗回数. */
   private int loginFailureCount;
