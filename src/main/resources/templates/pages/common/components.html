@@ -5,56 +5,63 @@
 </head>
 
 <body>
-  <main>
-    <!--/* Modalダイアログ */-->
-    <div th:fragment="modalDialog">
-      <modalDialog>
-        <style>
-          .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-          }
-          /* Modal Content */
-          .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            display: block;
-          }
-          
-          .closeMark {
-            color: #aaaaaa;
-            float: right;
-            font-size: 25px;
-            font-weight: bold;
-          }
-          .closeMark:hover,
-          .closeMark:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-          }
-        </style>
-        <div id="modalDialog" class="modal">
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="closeMark" onclick="">&times;</span>
-            <p id="msg"></p>
-            <button id="btnOk">はい</button>
-            <button id="btnCancel">キャンセル</button>
-          </div>
-        </div>
-      </modalDialog>
+  <main> <!--/* Modalダイアログ */-->
+  <div th:fragment="modalDialog">
+    <modalDialog>
+    <style>
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	display: block;
+}
+
+.closeMark {
+	color: #aaaaaa;
+	float: right;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.closeMark:hover, .closeMark:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+</style>
+    <div id="modalDialog" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="closeMark" onclick="">&times;</span>
+        <p id="msg"></p>
+        <button id="btnOk">はい</button>
+        <button id="btnCancel">キャンセル</button>
+      </div>
+    </div>
+    </modalDialog>
+
+    <!--/* ダイアログメッセージ */-->
+    <div th:fragment="dialogMessages">
+      <dialogMessages>
+        <input type="hidden" id="appCompleteMessageSuccess" th:value='${appCompleteMessageSuccess}' />
+        <input type="hidden" id="appCompleteMessageWarning" th:value='${appCompleteMessageWarning}' />
+        <input type="hidden" id="appCompleteMessageFailure" th:value='${appCompleteMessageFailure}' />
+      </dialogMessages>
     </div>
   </main>
 </body>

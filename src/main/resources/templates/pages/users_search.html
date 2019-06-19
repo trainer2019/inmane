@@ -56,7 +56,7 @@
                   <label for="nonDeleted">利用不可を除外：</label>
                 </td>
                 <td colspan="1">
-                  <input type="checkbox" value="on" th:field="*{nonDeleted}" checked="checked" />
+                  <input type="checkbox" th:field="*{nonDeleted}" value="on" checked="checked" />
                 </td>
                 <td colspan="1">
                   <span th:if="${#fields.hasErrors('nonDeleted')}" th:errors="*{nonDeleted}" style="color: red;">error!</span>

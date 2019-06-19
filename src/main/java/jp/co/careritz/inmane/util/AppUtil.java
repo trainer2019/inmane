@@ -1,5 +1,9 @@
 package jp.co.careritz.inmane.util;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import org.springframework.util.StringUtils;
 
 /**
@@ -39,4 +43,45 @@ public class AppUtil {
     return !isEmptyStr(input);
   }
 
+  /**
+   * 日付型オブジェクトを引数で指定した日付フォーマットの日付文字列に変換します.
+   *
+   * @param input 変換対象タイムスタンプ型オブジェクト
+   * @param format 日付フォーマット
+   * @return 日付文字列<br>
+   *         ※引数未入力の場合はnullを返却する
+   */
+  public static <T extends Date> String convDateToStr(T input, String format) {
+
+    // 未入力検証処理
+    if (input == null || isEmptyStr(format)) {
+      return null;
+    }
+
+    return convTimestampToStr(new Timestamp(input.getTime()), format);
+  }
+
+  /**
+   * タイムスタンプ型オブジェクトを引数で指定した日付フォーマットの日付文字列に変換します.
+   *
+   * @param input 変換対象タイムスタンプ型オブジェクト
+   * @param format 日付フォーマット
+   * @return 日付文字列<br>
+   *         ※引数未入力の場合はnullを返却する
+   */
+  public static String convTimestampToStr(Timestamp input, String format) {
+
+    // 未入力検証処理
+    if (input == null || isEmptyStr(format)) {
+      return null;
+    }
+
+    // 日付日付フォーマットの取得
+    SimpleDateFormat df = new SimpleDateFormat(format, Locale.JAPAN);
+
+    Timestamp date = new Timestamp(input.getTime());
+
+    // 指定日付フォーマットに変換
+    return df.format(date);
+  }
 }

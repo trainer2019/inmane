@@ -1,6 +1,5 @@
 package jp.co.careritz.inmane.form;
 
-import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -30,17 +29,18 @@ public class UsersCreateForm {
   /** ログイン失敗回数. */
   private int loginFailureCount;
   /** ログイン拒否時間. */
-  private Date loginDeniedAt;
+  private String loginDeniedAt;
   /** 削除済フラグ. */
-  private int deleted;
+  @Pattern(regexp = "on", message = "{errors.validation.IllegalData.message}")
+  private String deleted;
   /** 更新者ID. */
   private String updaterId;
   /** 更新日時. */
-  private Date updatedAt;
+  private String updatedAt;
   /** 作成者ID. */
   private String createrId;
   /** 作成日時. */
-  private Date createdAt;
+  private String createdAt;
 
   public String getUserId() {
     return userId;
@@ -82,19 +82,19 @@ public class UsersCreateForm {
     this.loginFailureCount = loginFailureCount;
   }
 
-  public Date getLoginDeniedAt() {
+  public String getLoginDeniedAt() {
     return loginDeniedAt;
   }
 
-  public void setLoginDeniedAt(Date loginDeniedAt) {
+  public void setLoginDeniedAt(String loginDeniedAt) {
     this.loginDeniedAt = loginDeniedAt;
   }
 
-  public int getDeleted() {
+  public String getDeleted() {
     return deleted;
   }
 
-  public void setDeleted(int deleted) {
+  public void setDeleted(String deleted) {
     this.deleted = deleted;
   }
 
@@ -106,11 +106,11 @@ public class UsersCreateForm {
     this.updaterId = updaterId;
   }
 
-  public Date getUpdatedAt() {
+  public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(Date updatedAt) {
+  public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 
@@ -122,11 +122,11 @@ public class UsersCreateForm {
     this.createrId = createrId;
   }
 
-  public Date getCreatedAt() {
+  public String getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Date createdAt) {
+  public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 

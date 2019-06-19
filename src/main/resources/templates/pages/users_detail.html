@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>ユーザ管理</title>
+<meta th:include="users_layout :: head" th:remove="tag"></meta>
+
+<script type="text/javascript">
+  /*<![CDATA[*/
+  function pwCheckOnchangeHandler() {
+    let pw = document.getElementById("password");
+    let pwCheck = document.getElementById("password-check");
+
+    pw.setAttribute("type", pwCheck.checked ? "text" : "password");
+  }
+
+  function onclickHandler(msg) {
+    App.dialogConfirm(msg, (val) => {
+      if (val) {
+        $("#createForm").submit();
+        return true;
+      }
+      return false;
+    });
+  }
+  /*]]>*/
+</script>
+</head>
+<body>
+  <div class="wrapper">
+    <!--/* ▼ サイドメニュー表示 */-->
+    <div th:include="common/layout :: sideMenu"></div>
+    <!--/* ▲ サイドメニュー表示 */-->
+    <div class="container">
+      <div
+        th:with="uri      = ${#httpServletRequest.requestURI},
+                    isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')},
+                    isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
+        <div>
+          <header th:replace="common/layout :: header(${isDetail} ? 'ユーザ詳細' : 'ユーザ編集')"></header>
+        </div>
+        <div class="tab">
+          <div class="boardArea" style="border-top: #c0c0c0 solid 1px;">
+            <form id="createForm" method="post" th:object="${usersCreateForm}" th:action="${isDetail} ? '' : '__@{/maintenance/users/edit}__'">
+              <table>
+                <tr>
+                  <!-- /* start ユーザID */ -->
+                  <td colspan="1" class="h_data" >
+                    <label>ユーザID</label>
+                  </td>
+                  <td colspan="1">
+                    <label th:text="*{userId}" ></label>
+                    <input type="hidden" th:field="*{userId}" />
+                    <br/>
+                    <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" style="color: red;">error!</span>
+                  </td>
+                  <!-- /* end ユーザID */ -->
+                </tr>
+                <tr th:unless="${isDetail}">
+                  <!-- /* start パスワード */ -->
+                  <td class="h_data" colspan="1">
+                    <label>パスワード</label>
+                  </td>
+                  <td colspan="1" th:if="${isEdit}">
+                    <input id="password" type="password" th:field="*{password}" size="15" maxlength="10" placeholder="半角英数4～10文字" />
+                    <br/>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;">error!</span>
+                    <br />
+                    <input type="checkbox" id="password-check" onchange="pwCheckOnchangeHandler()" />
+                    <label>パスワードを表示する</label>
+                    <br />
+                    <label style="font-size: 12px;">※入力がある場合のみパスワードを再設定します。</label>
+                  </td>
+                  <!-- /* end パスワード */ -->
+                </tr>
+                <tr>
+                  <!-- /* start ユーザ名 */ -->
+                  <td class="h_data" colspan="1">
+                    <label class="required">ユーザ名</label>
+                  </td>
+                  <td colspan="1" th:unless="${isDetail}">
+                    <input type="text" th:field="*{userName}" size="30" maxlength="20" placeholder="全角1～20文字" required/>
+                    <br/>
+                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: red;">error!</span>
+                  </td>
+                  <td colspan="1" th:if="${isDetail}">
+                    <label th:text="*{userName}"></label>
+                  </td>
+                  <!-- /* end ユーザ名 */ -->
+                </tr>
+                <tr>
+                  <!-- /* start 権限 */ -->
+                  <td class="h_data" colspan="1">
+                    <label class="required">権限</label>
+                  </td>
+                  <div th:unless="${isDetail}">
+                    <td colspan="1">
+                      <input id="radioUser" type="radio" value="USER" th:field="*{roleName}" checked="checked" />
+                      <label>ユーザ</label>
+                      <input id="radioAdmin" type="radio" value="ADMIN" th:field="*{roleName}" required/>
+                      <label>管理者</label>
+                      <br/>
+                      <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" style="color: red;">error!</span>
+                    </td>
+                  </div>
+                  <div th:if="${isDetail}">
+                    <td colspan="3" th:with="role=*{roleName}">
+                      <label th:text="${'ADMIN'.equals(role)} ? '管理者' : (${'USER'.equals(role)} ? '一般' : 'ERROR')"></label>
+                    </td>
+                  </div>
+                </tr>
+                <!-- /* end 権限 */ -->
+                <tr>
+                  <td class="h_data" colspan="1">ログイン失敗数</td>
+                  <td colspan="1">
+                    <label th:text="*{loginFailureCount}"></label>
+                    <input type="hidden" th:field="*{loginFailureCount}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="h_data" colspan="1">ログイン拒否日時</td>
+                  <td colspan="1">
+                    <label th:text="*{loginDeniedAt}"></label>
+                    <input type="hidden" th:field="*{loginDeniedAt}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <!-- /* start 利用可/不可 */ -->
+                  <td class="h_data" colspan="1">利用可/不可</td>
+                  <div th:if="${isDetail}">
+                    <td colspan="1">
+                      <label th:text="*{deleted=='on' ? '不可' : '可'}"></label>
+                    </td>
+                  </div>
+                  <div th:if="${isEdit}">
+                    <td colspan="1">
+                      <input type="checkbox" id="delete" th:field="*{deleted}" value="on" />
+                      <br />
+                      <span th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}" style="color: red;">error!</span>
+                      <label style="font-size: 12px;">※チェック有の場合は利用不可、チェック無の場合は利用可として更新ができます。</label>
+                    </td>
+                  </div>
+                  <!-- /* end 利用可/不可 */ -->
+                </tr>
+                <tr>
+                  <td class="h_data" colspan="1">最終更新者</td>
+                  <td colspan="3">
+                    <label th:text="*{updaterId}"></label>
+                    <input type="hidden" th:field="*{updaterId}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="h_data" colspan="1">最終更新日時</td>
+                  <td colspan="3">
+                    <label th:text="*{updatedAt}"></label>
+                    <input type="hidden" th:field="*{updatedAt}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="h_data" colspan="1">登録者</td>
+                  <td colspan="3">
+                    <label th:text="*{createrId}"></label>
+                    <input type="hidden" th:field="*{createrId}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="h_data" colspan="1">登録日時</td>
+                  <td colspan="3">
+                    <label th:text="*{createdAt}"></label>
+                    <input type="hidden" th:field="*{createdAt}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <!-- /* start ボタン */ -->
+                  <td></td>
+                  <td colspan="3" th:object="${usersCreateForm}" th:with="label='更新', msg= '__#{confirm.app.execution}__'">
+                    <button th:if="${isEdit}" type="button" id="update" th:onclick="'onclickHandler(\''+ __${#strings.replace(msg, '{name}', label)}__ + '\')'">更新</button>
+                    <button th:if="${isDetail}" type="button" th:data="@{/maintenance/users/edit}" th:userId="*{userId}"
+                      th:onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
+                    <button type="button"
+                      th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonDeleted=on'
+                                   : @{/maintenance/users/detail} +'?userId=' + *{userId}"
+                      th:onclick="location.href=this.getAttribute('data')">戻る</button>
+                  </td>
+                  <!-- /* end ボタン */ -->
+                </tr>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/* ▼ フッター表示 */-->
+  <div th:include="common/layout :: footer"></div>
+  <!--/* ▲ フッター表示 */-->
+</body>
+</html>

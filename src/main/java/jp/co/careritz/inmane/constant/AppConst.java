@@ -5,6 +5,16 @@ package jp.co.careritz.inmane.constant;
  */
 public class AppConst {
 
+  /** 空文字. */
+  public static final String EMPTY = "";
+
+  /** 処理完了メッセージID 正常. */
+  public static final String APP_COMPLETE_MESSAGE_ID_SUCCESS = "appCompleteMessageSuccess";
+  /** 処理完了メッセージID 警告. */
+  public static final String APP_COMPLETE_MESSAGE_ID_WARNING = "appCompleteMessageWarning";
+  /** 処理完了メッセージID 例外. */
+  public static final String APP_COMPLETE_MESSAGE_ID_FAILURE = "appCompleteMessageFailure";
+
   /* ---------------------------------------------------- */
   /* ユーザ情報関連 */
   /* ---------------------------------------------------- */
@@ -15,7 +25,16 @@ public class AppConst {
   /** ロール名_全て（検索用）. */
   public static final String ROLE_NAME_ALL = "ALL";
 
-  /** .利用可/不可_利用可 **/
+  /** 利用可/不可_利用可. **/
   public static final String NON_DELETED_ON = "on";
+  /** 削除_ON. **/
+  public static final String DELETED_ON = "on";
+
+  /* ---------------------------------------------------- */
+  /* フォーマット */
+  /* ---------------------------------------------------- */
+
+  /** 日付フォーマット(更新日時、登録日時を表示する際に使用する標準的なパターン). */
+  public static final String DATE_PATTERN_STD = "yyyy/MM/dd HH:mm:ss";
 
 }

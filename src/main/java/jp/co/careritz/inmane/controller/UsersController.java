@@ -1,5 +1,14 @@
 package jp.co.careritz.inmane.controller;
 
+import static jp.co.careritz.inmane.constant.AppConst.APP_COMPLETE_MESSAGE_ID_FAILURE;
+import static jp.co.careritz.inmane.constant.AppConst.DATE_PATTERN_STD;
+import static jp.co.careritz.inmane.constant.AppConst.DELETED_ON;
+import static jp.co.careritz.inmane.constant.AppConst.EMPTY;
+import static jp.co.careritz.inmane.constant.AppConst.NON_DELETED_ON;
+import static jp.co.careritz.inmane.constant.AppConst.ROLE_NAME_ALL;
+import static jp.co.careritz.inmane.constant.AppConst.ROLE_NAME_USER;
+import static jp.co.careritz.inmane.util.AppUtil.convDateToStr;
+import static jp.co.careritz.inmane.util.AppUtil.isNotEmptyStr;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jp.co.careritz.inmane.config.PropertyConfig;
-import jp.co.careritz.inmane.constant.AppConst;
 import jp.co.careritz.inmane.controller.commons.AbstractAppController;
 import jp.co.careritz.inmane.dto.UsersDto;
 import jp.co.careritz.inmane.form.UsersCreateForm;
@@ -76,10 +84,9 @@ public class UsersController extends AbstractAppController {
 
     dto.setUserId(form.getUserId());
     dto.setUserName(form.getUserName());
-    dto.setRoleName(AppConst.ROLE_NAME_ALL.equals(form.getRoleName()) ? "" : form.getRoleName());
+    dto.setRoleName(ROLE_NAME_ALL.equals(form.getRoleName()) ? EMPTY : form.getRoleName());
 
-    List<UsersDto> usersList =
-        usersService.find(dto, AppConst.NON_DELETED_ON.equals(form.getNonDeleted()));
+    List<UsersDto> usersList = usersService.find(dto, NON_DELETED_ON.equals(form.getNonDeleted()));
 
     // 検索条件を設定
     model.addAttribute("usersSearchForm", form);
@@ -100,7 +107,7 @@ public class UsersController extends AbstractAppController {
   public String viewCreate(Model model) {
 
     UsersCreateForm form = new UsersCreateForm();
-    form.setRoleName(AppConst.ROLE_NAME_USER);
+    form.setRoleName(ROLE_NAME_USER);
 
     model.addAttribute("usersCreateForm", form);
 
@@ -140,16 +147,14 @@ public class UsersController extends AbstractAppController {
     int result = usersService.create(dto);
 
     if (result == 0) {
-      String msg = propertyConfig.get("ok.app.complete");
-      // 画面に表示するエラーメッセージを設定
-      model.addAttribute("appCompleteMessage", msg);
+      // Flashスコープでメッセージを設定
+      setCompleteMessageSuccess(redirectAttributes, propertyConfig.get("ok.app.complete"));
     } else {
       String errMsg = (result == 1) ? propertyConfig.get("error.app.user.deplicated")
           : propertyConfig.get("error.app.fatal");
-      // エラーメッセージを設定
-      model.addAttribute("createFailureMessage", errMsg);
       // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
+      model.addAttribute(APP_COMPLETE_MESSAGE_ID_FAILURE, errMsg);
       return "users_create";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();
@@ -164,9 +169,9 @@ public class UsersController extends AbstractAppController {
    */
   @GetMapping("detail")
   public String viewDetail(Model model,
-      @RequestParam(name = "userId", defaultValue = "") String userId) {
+      @RequestParam(name = "userId", defaultValue = EMPTY) String userId) {
 
-    if ("".equals(userId)) {
+    if (EMPTY.equals(userId)) {
       return "redirect:/error/403";
     }
 
@@ -180,16 +185,16 @@ public class UsersController extends AbstractAppController {
     form.setUserName(dto.getUserName());
     form.setRoleName(dto.getRoleName());
     form.setLoginFailureCount(dto.getLoginFailureCount());
-    form.setLoginDeniedAt(dto.getLoginDeniedAt());
-    form.setDeleted(dto.getDeleted());
+    form.setLoginDeniedAt(convDateToStr(dto.getLoginDeniedAt(), DATE_PATTERN_STD));
+    form.setDeleted(dto.getDeleted() == 1 ? DELETED_ON : EMPTY);
     form.setUpdaterId(dto.getUpdaterId());
-    form.setUpdatedAt(dto.getUpdatedAt());
+    form.setUpdatedAt(convDateToStr(dto.getUpdatedAt(), DATE_PATTERN_STD));
     form.setCreaterId(dto.getCreaterId());
-    form.setCreatedAt(dto.getCreatedAt());
+    form.setCreatedAt(convDateToStr(dto.getCreatedAt(), DATE_PATTERN_STD));
 
     model.addAttribute("usersCreateForm", form);
 
-    return "users_create";
+    return "users_detail";
   }
 
   /**
@@ -201,9 +206,9 @@ public class UsersController extends AbstractAppController {
    */
   @GetMapping("edit")
   public String viewEdit(Model model,
-      @RequestParam(name = "userId", defaultValue = "") String userId) {
+      @RequestParam(name = "userId", defaultValue = EMPTY) String userId) {
 
-    if ("".equals(userId)) {
+    if (EMPTY.equals(userId)) {
       return "redirect:/error/403";
     }
 
@@ -218,16 +223,16 @@ public class UsersController extends AbstractAppController {
     form.setUserName(dto.getUserName());
     form.setRoleName(dto.getRoleName());
     form.setLoginFailureCount(dto.getLoginFailureCount());
-    form.setLoginDeniedAt(dto.getLoginDeniedAt());
-    form.setDeleted(dto.getDeleted());
+    form.setLoginDeniedAt(convDateToStr(dto.getLoginDeniedAt(), DATE_PATTERN_STD));
+    form.setDeleted(dto.getDeleted() == 1 ? DELETED_ON : EMPTY);
     form.setUpdaterId(dto.getUpdaterId());
-    form.setUpdatedAt(dto.getUpdatedAt());
+    form.setUpdatedAt(convDateToStr(dto.getUpdatedAt(), DATE_PATTERN_STD));
     form.setCreaterId(dto.getCreaterId());
-    form.setCreatedAt(dto.getCreatedAt());
+    form.setCreatedAt(convDateToStr(dto.getCreatedAt(), DATE_PATTERN_STD));
 
     model.addAttribute("usersCreateForm", form);
 
-    return "users_create";
+    return "users_detail";
   }
 
   /**
@@ -244,7 +249,7 @@ public class UsersController extends AbstractAppController {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("usersCreateForm", form);
-      return "users_create";
+      return "users_detail";
     }
 
     final String password = new BCryptPasswordEncoder().encode(form.getPassword());
@@ -255,25 +260,23 @@ public class UsersController extends AbstractAppController {
     dto.setPassword(password);
     dto.setUserName(form.getUserName());
     dto.setRoleName(form.getRoleName());
-    dto.setDeleted(form.getDeleted());
+    dto.setDeleted(
+        isNotEmptyStr(form.getDeleted()) && DELETED_ON.equals(form.getDeleted()) ? 1 : 0);
     dto.setUpdaterId(userDetails.getUserId());
     dto.setUpdatedAt(now);
 
     int result = usersService.updateByPk(dto);
 
     if (result == 0) {
-      String msg = propertyConfig.get("ok.app.complete");
-      // 画面に表示するエラーメッセージを設定
-      model.addAttribute("appCompleteMessage", msg);
+      // Flashスコープでメッセージを設定
+      setCompleteMessageSuccess(redirectAttributes, propertyConfig.get("ok.app.complete"));
     } else {
       String errMsg = (result == 1) ? propertyConfig.get("error.app.user.deplicated")
           : propertyConfig.get("error.app.fatal");
-      // エラーメッセージを設定
-      model.addAttribute("createFailureMessage", errMsg);
       // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
-
-      return "users_create";
+      model.addAttribute(APP_COMPLETE_MESSAGE_ID_FAILURE, errMsg);
+      return "users_detail";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();
   }

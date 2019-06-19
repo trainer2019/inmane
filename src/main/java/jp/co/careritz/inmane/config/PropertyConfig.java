@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import jp.co.careritz.inmane.constant.AppConst;
 
 /**
  * プロパティ設定.
@@ -39,7 +40,7 @@ public class PropertyConfig {
     if (prop != null) {
       return MessageFormat.format(prop, args);
     } else {
-      return "";
+      return AppConst.EMPTY;
     }
   }
 }
