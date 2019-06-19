@@ -13,7 +13,23 @@
     pw.setAttribute("type", pwCheck.checked ? "text" : "password");
   }
 
+  function validity(element) {
+    let el = element;
+    let result = el.checkValidity();
+    if (!result){
+      // バリデーションエラーメッセージを表示
+      el.reportValidity();
+    }
+    return result;
+  }
   function onclickHandler(msg) {
+    let form = $("#createForm").get(0);
+    $(".errorMsg").text("");
+    // form内でバリデーションエラーがある場合は終了
+    if (!validity(form)){
+      return true;
+    }
+    // 確認ダイアログ
     App.dialogConfirm(msg, (val) => {
       if (val) {
         $("#createForm").submit();
@@ -51,7 +67,7 @@
                     <label th:text="*{userId}" ></label>
                     <input type="hidden" th:field="*{userId}" />
                     <br/>
-                    <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" style="color: red;">error!</span>
+                    <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="">error!</span>
                   </td>
                   <!-- /* end ユーザID */ -->
                 </tr>
@@ -63,8 +79,10 @@
                   <td colspan="1" th:if="${isEdit}">
                     <input id="password" type="password" th:field="*{password}" size="15" maxlength="10" placeholder="半角英数4～10文字" />
                     <br/>
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;">error!</span>
-                    <br />
+                    <div th:if="${#fields.hasErrors('password')}">
+                      <span  th:errors="*{password}" class="errorMsg">error!</span>
+                      <br />
+                    </div>
                     <input type="checkbox" id="password-check" onchange="pwCheckOnchangeHandler()" />
                     <label>パスワードを表示する</label>
                     <br />
@@ -80,7 +98,7 @@
                   <td colspan="1" th:unless="${isDetail}">
                     <input type="text" th:field="*{userName}" size="30" maxlength="20" placeholder="全角1～20文字" required/>
                     <br/>
-                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: red;">error!</span>
+                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="errorMsg">error!</span>
                   </td>
                   <td colspan="1" th:if="${isDetail}">
                     <label th:text="*{userName}"></label>
@@ -99,7 +117,7 @@
                       <input id="radioAdmin" type="radio" value="ADMIN" th:field="*{roleName}" required/>
                       <label>管理者</label>
                       <br/>
-                      <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" style="color: red;">error!</span>
+                      <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" class="errorMsg">error!</span>
                     </td>
                   </div>
                   <div th:if="${isDetail}">
@@ -134,8 +152,9 @@
                   <div th:if="${isEdit}">
                     <td colspan="1">
                       <input type="checkbox" id="delete" th:field="*{deleted}" value="on" />
+                      <div>
                       <br />
-                      <span th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}" style="color: red;">error!</span>
+                      <span th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}" class="errorMsg">error!</span>
                       <label style="font-size: 12px;">※チェック有の場合は利用不可、チェック無の場合は利用可として更新ができます。</label>
                     </td>
                   </div>
@@ -172,8 +191,9 @@
                 <tr>
                   <!-- /* start ボタン */ -->
                   <td></td>
-                  <td colspan="3" th:object="${usersCreateForm}" th:with="label='更新', msg= '__#{confirm.app.execution}__'">
-                    <button th:if="${isEdit}" type="button" id="update" th:onclick="'onclickHandler(\''+ __${#strings.replace(msg, '{name}', label)}__ + '\')'">更新</button>
+                  <td colspan="3" th:object="${usersCreateForm}" th:with="msg= '__#{confirm.app.execution}__'">
+                    <button th:if="${isEdit}" type="button" id="update" 
+                      th:onclick="'Users.submitHandler(\'createForm\', \''+ __${#strings.replace(msg, '{name}', '更新')}__ + '\')'">更新</button>
                     <button th:if="${isDetail}" type="button" th:data="@{/maintenance/users/edit}" th:userId="*{userId}"
                       th:onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
                     <button type="button"

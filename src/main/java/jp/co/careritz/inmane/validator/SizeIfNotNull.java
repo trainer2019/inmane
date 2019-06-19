@@ -63,7 +63,7 @@ public @interface SizeIfNotNull {
   }
 
   /**
-   * NULL除外のサイズチェックバリデーター.
+   * nullまたは空文字除外のサイズチェックバリデーター.
    */
   class SizeIfNullValidator implements ConstraintValidator<SizeIfNotNull, String> {
 
@@ -90,7 +90,7 @@ public @interface SizeIfNotNull {
      */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext ctx) {
-      // nullは対象外。nullではない場合はサイズをチェック
+      // nullまたは空文字は対象外。nullではない場合はサイズをチェック
       return value == null || value.isEmpty() ? true
           : min <= value.length() && value.length() <= max;
     }

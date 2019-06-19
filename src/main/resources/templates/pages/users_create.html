@@ -3,20 +3,6 @@
 <head>
 <title>ユーザ管理</title>
 <meta th:include="users_layout :: head" th:remove="tag"></meta>
-
-<script type="text/javascript">
-/*<![CDATA[*/
-  function onclickHandler(msg) {
-    App.dialogConfirm(msg, (val) => {
-      if (val) {
-        $("#createForm").submit();
-        return true;
-      }
-      return false;
-    });
-  }
-/*]]>*/
-</script>
 </head>
 <body>
   <div class="wrapper">
@@ -42,7 +28,7 @@
                 <td colspan="2">
                   <input type="text" th:field="*{userId}" size="15" maxlength="10" placeholder="半角英数5～10文字" required />
                   <br/>
-                  <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" style="color: red;">error!</span>
+                  <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="errorMsg">error!</span>
                 </td>
                 <!-- /* end ユーザID */ -->
               </tr>
@@ -64,7 +50,7 @@
                 <td colspan="1">
                   <input type="text" th:field="*{userName}" size="32" maxlength="20" placeholder="全角1～20文字" required />
                   <br/>
-                  <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: red;">error!</span>
+                  <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="errorMsg">error!</span>
                 </td>
                 <!-- /* end ユーザ名 */ -->
               </tr>
@@ -79,7 +65,7 @@
                   <input id="radioAdmin" type="radio" value="ADMIN" th:field="*{roleName}" />
                   <label>管理者</label>
                   <br/>
-                  <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" style="color: red;">error!</span>
+                  <span th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" class="errorMsg">error!</span>
                 </td>
               </tr>
               <!-- /* end 権限 */ -->
@@ -87,7 +73,7 @@
                 <!-- /* start ボタン */ -->
                 <td></td>
                 <td colspan="3" th:object="${usersCreateForm}" th:with="label='登録', msg= '__#{confirm.app.execution}__'">
-                  <button type="button" id="register" th:onclick="'onclickHandler(\''+ __${#strings.replace(msg, '{name}', label)}__ + '\')'">登録</button>
+                  <button type="button" th:onclick="'Users.submitHandler(\'createForm\', \''+ __${#strings.replace(msg, '{name}', label)}__ + '\')'">登録</button>
                 </td>
                 <!-- /* end ボタン */ -->
               </tr>

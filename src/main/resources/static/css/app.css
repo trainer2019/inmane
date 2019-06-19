@@ -179,3 +179,7 @@ a.article, a.article:hover {
 	font-weight: bold;
 	content: " *";
 }
+/* エラーメッセージ */
+.errorMsg {
+	color: red;
+}
