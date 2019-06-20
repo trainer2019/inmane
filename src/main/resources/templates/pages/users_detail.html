@@ -3,44 +3,8 @@
 <head>
 <title>ユーザ管理</title>
 <meta th:include="users_layout :: head" th:remove="tag"></meta>
-
-<script type="text/javascript">
-  /*<![CDATA[*/
-  function pwCheckOnchangeHandler() {
-    let pw = document.getElementById("password");
-    let pwCheck = document.getElementById("password-check");
-
-    pw.setAttribute("type", pwCheck.checked ? "text" : "password");
-  }
-
-  function validity(element) {
-    let el = element;
-    let result = el.checkValidity();
-    if (!result){
-      // バリデーションエラーメッセージを表示
-      el.reportValidity();
-    }
-    return result;
-  }
-  function onclickHandler(msg) {
-    let form = $("#createForm").get(0);
-    $(".errorMsg").text("");
-    // form内でバリデーションエラーがある場合は終了
-    if (!validity(form)){
-      return true;
-    }
-    // 確認ダイアログ
-    App.dialogConfirm(msg, (val) => {
-      if (val) {
-        $("#createForm").submit();
-        return true;
-      }
-      return false;
-    });
-  }
-  /*]]>*/
-</script>
 </head>
+
 <body>
   <div class="wrapper">
     <!--/* ▼ サイドメニュー表示 */-->

@@ -48,7 +48,7 @@
                   <label class="required">ユーザ名</label>
                 </td>
                 <td colspan="1">
-                  <input type="text" th:field="*{userName}" size="32" maxlength="20" placeholder="全角1～20文字" required />
+                  <input type="text" th:field="*{userName}" size="32" maxlength="20" placeholder="全半角1～20文字" required />
                   <br/>
                   <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="errorMsg">error!</span>
                 </td>

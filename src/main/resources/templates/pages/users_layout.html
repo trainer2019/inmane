@@ -29,7 +29,7 @@
                 th:aria-selected="${#strings.contains(uri, paths[__${status.index}__])} ? 'true' : 'false'" 
                 th:data="${toPaths[__${status.index}__]}" 
                 th:onclick="window.location.href=this.getAttribute('data')">
-                <h5>[[${tabNm}]]</h5>
+                <h5 th:text="${tabNm}"></h5>
               </a>
             </li>
           </div>

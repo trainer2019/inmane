@@ -101,13 +101,13 @@
             <tr th:if="user" th:each="user, userStat:${usersList}">
               <td th:text="${userStat.count}"></td>
               <td>
-                <a th:href="@{'/maintenance/users/detail?userId=' + ${user.userId}}">[[${user.userId}]]</a>
+                <a th:href="@{'/maintenance/users/detail?userId=' + ${user.userId}}" th:text="${user.userId}"></a>
               </td>
               <td>
                 <label class="ellipsis" th:text="${user.userName}" th:title="${user.userName}"></label>
               </td>
-              <td>[[${'ADMIN'.equals(user.roleName)} ? '管理者' : (${'USER'.equals(user.roleName)} ? '一般' : 'ERROR')]]</td>
-              <td>[[${user.deleted==1} ? '不可' : '可']]</td>
+              <td th:text="${'ADMIN'.equals(user.roleName) ? '管理者' : 'USER'.equals(user.roleName) ? '一般' : 'ERROR'}"></td>
+              <td th:text="${user.deleted==1 ? '不可' : '可'}"></td>
               <td th:text="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
               <td th:text="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
             </tr>
