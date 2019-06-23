@@ -149,6 +149,13 @@ a.article, a.article:hover {
 	color: #6d7fcc !important;
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  margin-top: -5px;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */

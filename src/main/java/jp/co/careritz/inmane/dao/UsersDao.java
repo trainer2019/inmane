@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import jp.co.careritz.inmane.config.PropertyConfig;
 import jp.co.careritz.inmane.dto.UsersDto;
 import jp.co.careritz.inmane.service.UsersService;
 
@@ -24,7 +25,9 @@ import jp.co.careritz.inmane.service.UsersService;
 public class UsersDao {
 
   @Autowired
-  DataSource dataSource;
+  private PropertyConfig propertyConfig;
+  @Autowired
+  private DataSource dataSource;
 
   // ロガー
   static Logger log = LoggerFactory.getLogger(UsersService.class);
@@ -68,7 +71,7 @@ public class UsersDao {
           dto.setRoleName(rs.getString("ROLE_NAME"));
           dto.setLoginFailureCount(rs.getInt("LOGIN_FAILURE_COUNT"));
           dto.setLoginDeniedAt(rs.getDate("LOGIN_DENIED_AT"));
-          dto.setDeleted(rs.getInt("DELETED"));
+          dto.setIsInvalid(rs.getInt("IS_INVALID"));
           dto.setUpdaterId(rs.getString("UPDATER_ID"));
           dto.setUpdatedAt(rs.getDate("UPDATED_AT"));
           dto.setCreaterId(rs.getString("CREATER_ID"));
@@ -76,8 +79,9 @@ public class UsersDao {
         }
       }
     } catch (SQLException e) {
-      log.error("{error.app.log.unexpected}", e);
+      log.error(propertyConfig.get("{error.app.log.unexpected}"), e);
     }
+
     // 呼び出し元に取得結果を返却
     return dto;
   }
@@ -87,11 +91,11 @@ public class UsersDao {
    * ユーザを取得する.
    * 
    * @param dto UsersDto
-   * @param nonDeleted 削除済を除外フラグ
+   * @param nonIsInvalid 無効を除外フラグ
    * 
    * @return ユーザを格納したdtoリスト
    */
-  public List<UsersDto> select(final UsersDto dto, final boolean nonDeleted) {
+  public List<UsersDto> select(final UsersDto dto, final boolean nonIsInvalid) {
 
     // SQL文
     StringBuilder sqlBuilder = new StringBuilder();
@@ -102,8 +106,8 @@ public class UsersDao {
     sqlBuilder.append("   AND ROLE_NAME LIKE ? ");
 
     // 削除済を除外フラグがある場合の条件を設定
-    if (nonDeleted) {
-      sqlBuilder.append("AND   DELETED = 0 ");
+    if (nonIsInvalid) {
+      sqlBuilder.append("AND   IS_INVALID = 0 ");
     }
     sqlBuilder.append("ORDER BY USER_ID ");
 
@@ -133,7 +137,7 @@ public class UsersDao {
           resultDto.setRoleName(rs.getString("ROLE_NAME"));
           resultDto.setLoginFailureCount(rs.getInt("LOGIN_FAILURE_COUNT"));
           resultDto.setLoginDeniedAt(rs.getDate("LOGIN_DENIED_AT"));
-          resultDto.setDeleted(rs.getInt("DELETED"));
+          resultDto.setIsInvalid(rs.getInt("IS_INVALID"));
           resultDto.setUpdaterId(rs.getString("UPDATER_ID"));
           resultDto.setUpdatedAt(rs.getDate("UPDATED_AT"));
           resultDto.setCreaterId(rs.getString("CREATER_ID"));
@@ -144,7 +148,7 @@ public class UsersDao {
       }
 
     } catch (SQLException e) {
-      log.error("{error.app.log.unexpected}", e);
+      log.error(propertyConfig.get("{error.app.log.unexpected}"), e);
     }
     // 呼び出し元に取得結果を返却
     return users;
@@ -153,11 +157,11 @@ public class UsersDao {
   /**
    * ユーザを更新する.
    * 
-   * @param userId
+   * @param dto UsersDto
    *
    * @return 処理結果（0:正常終了, 1:一意制約エラー, 9:想定外エラー）
    */
-  public int update(UsersDto dto) {
+  public int update(final UsersDto dto) {
 
     // SQL文
     StringBuilder sqlBuilder = new StringBuilder();
@@ -179,7 +183,7 @@ public class UsersDao {
     if (dto.getLoginDeniedAt() != null) {
       sqlBuilder.append("LOGIN_DENIED_AT = ? ,");
     }
-    sqlBuilder.append("DELETED = ? ,");
+    sqlBuilder.append("IS_INVALID = ? ,");
     sqlBuilder.append("UPDATER_ID = ? ,");
     sqlBuilder.append("UPDATED_AT = ? ");
     sqlBuilder.append("WHERE USER_ID = ? ");
@@ -206,7 +210,7 @@ public class UsersDao {
       if (dto.getLoginDeniedAt() != null) {
         ps.setDate(idx++, dto.getLoginDeniedAt());
       }
-      ps.setInt(idx++, dto.getDeleted());
+      ps.setInt(idx++, dto.getIsInvalid());
       ps.setString(idx++, dto.getUpdaterId());
       ps.setDate(idx++, dto.getUpdatedAt());
       ps.setString(idx, dto.getUserId());
@@ -218,10 +222,10 @@ public class UsersDao {
       int errCode = e.getErrorCode();
       log.debug("SQLException#getErrorCode = " + errCode);
       if (errCode == 1) {
-        log.error("{error.app.log.db.uniqueConstraint}", e);
+        log.error(propertyConfig.get("error.app.log.db.uniqueConstraint"), e);
         return 1;
       } else {
-        log.error("{error.app.log.unexpected}", e);
+        log.error(propertyConfig.get("{error.app.log.unexpected}"), e);
         return 9;
       }
     }
@@ -231,11 +235,11 @@ public class UsersDao {
   /**
    * ユーザを登録する.
    * 
-   * @param userId
+   * @param dto UsersDto
    *
    * @return 処理結果（0:正常終了, 1:一意制約エラー, 9:想定外エラー）
    */
-  public int create(UsersDto dto) {
+  public int create(final UsersDto dto) {
 
     // SQL文
     StringBuilder sqlBuilder = new StringBuilder();
@@ -246,7 +250,7 @@ public class UsersDao {
     sqlBuilder.append(",ROLE_NAME ");
     sqlBuilder.append(",LOGIN_FAILURE_COUNT ");
     sqlBuilder.append(",LOGIN_DENIED_AT ");
-    sqlBuilder.append(",DELETED ");
+    sqlBuilder.append(",IS_INVALID ");
     sqlBuilder.append(",UPDATER_ID ");
     sqlBuilder.append(",UPDATED_AT ");
     sqlBuilder.append(",CREATER_ID ");
@@ -291,12 +295,44 @@ public class UsersDao {
       int errCode = e.getErrorCode();
       log.debug("SQLException#getErrorCode = " + errCode);
       if (errCode == 1) {
-        log.error("{error.app.log.db.uniqueConstraint}", e);
+        log.error(propertyConfig.get("error.app.log.db.uniqueConstraint"), e);
         return 1;
       } else {
-        log.error("{error.app.log.unexpected}", e);
+        log.error(propertyConfig.get("{error.app.log.unexpected}"), e);
         return 9;
       }
+    }
+    return 0;
+  }
+
+  /**
+   * ユーザを削除する.
+   * 
+   * @param userId
+   *
+   * @return 処理結果（0:正常終了, 9:想定外エラー）
+   */
+  public int delete(final String userId) {
+    // SQL文
+    StringBuilder sqlBuilder = new StringBuilder();
+    sqlBuilder.append("DELETE FROM USERS ");
+    sqlBuilder.append(" WHERE USER_ID = ? ");
+
+    log.info("SQL:" + sqlBuilder.toString());
+
+    // DBとの接続を行う
+    try (Connection con = DataSourceUtils.getConnection(dataSource);
+        PreparedStatement ps = con.prepareStatement(sqlBuilder.toString());) {
+
+      // 各項目値をバインド
+      ps.setString(1, userId);
+
+      // SQLを実行
+      ps.executeUpdate();
+
+    } catch (SQLException e) {
+      log.error(propertyConfig.get("{error.app.log.unexpected}"), e);
+      return 9;
     }
     return 0;
   }

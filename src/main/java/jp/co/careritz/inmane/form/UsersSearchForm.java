@@ -22,7 +22,7 @@ public class UsersSearchForm {
   private String roleName;
   /** 削除済を含む. */
   @Pattern(regexp = "on", message = "{errors.validation.IllegalData.message}")
-  private String nonDeleted;
+  private String nonIsInvalid;
 
   public String getUserId() {
     return userId;
@@ -48,12 +48,12 @@ public class UsersSearchForm {
     this.roleName = roleName;
   }
 
-  public String getNonDeleted() {
-    return nonDeleted;
+  public String getNonIsInvalid() {
+    return nonIsInvalid;
   }
 
-  public void setNonDeleted(String nonDeleted) {
-    this.nonDeleted = nonDeleted;
+  public void setNonIsInvalid(String nonIsInvalid) {
+    this.nonIsInvalid = nonIsInvalid;
   }
 
 }

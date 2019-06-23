@@ -51,4 +51,9 @@ public class UsersService {
 
     return dao.create(dto);
   }
+
+  public int deleteByPk(String userId) {
+
+    return dao.delete(userId);
+  }
 }

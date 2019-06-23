@@ -3,6 +3,28 @@
 <head>
 <title>ユーザ管理</title>
 <meta th:include="users_layout :: head" th:remove="tag"></meta>
+<script>
+    $(function () {
+        var outer = $("<div>").css({
+                visibility: "hidden",
+                width: 100,
+                overflow: "scroll",
+            }).appendTo("body"),
+            width = $("<div>").css({
+                width: "100%"
+            }).appendTo(outer).outerWidth(),
+            result = 0;
+
+        outer.remove();
+        result = 100 - width;
+        $(".table-fixed thead").css({
+            paddingRight: result
+        });
+    });
+</script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
   <div class="wrapper">
@@ -37,7 +59,7 @@
               </tr>
               <tr>
                 <td colspan="1">
-                  <label>ユーザ権限：</label>
+                  <label>権限：</label>
                 </td>
                 <td colspan="1">
                   <input id="radioAll" type="radio" value="ALL" th:field="*{roleName}" checked="checked">
@@ -53,13 +75,13 @@
               </tr>
               <tr>
                 <td colspan="1">
-                  <label for="nonDeleted">利用不可を除外：</label>
+                  <label for="nonIsInvalid">無効を除外：</label>
                 </td>
                 <td colspan="1">
-                  <input type="checkbox" th:field="*{nonDeleted}" value="on" checked="checked" />
+                  <input type="checkbox" th:field="*{nonIsInvalid}" value="on" checked="checked" />
                 </td>
                 <td colspan="1">
-                  <span th:if="${#fields.hasErrors('nonDeleted')}" th:errors="*{nonDeleted}" style="color: red;">error!</span>
+                  <span th:if="${#fields.hasErrors('nonIsInvalid')}" th:errors="*{nonIsInvalid}" style="color: red;">error!</span>
                 </td>
               </tr>
               <tr>
@@ -83,33 +105,81 @@
         <span th:text="'【検索結果：'+${#lists.size(usersList)}+'件】'"></span>
         <!--/* ▲ 検索結果件数 */-->
       </div>
-      <div class="dataList">
+      <div>
         <!--/* ▼ 検索結果リスト */-->
-        <table class="table table-hover table-sm" name="dataList" id="dataList">
+        <table class="table table-fixed table-hover table-stripe border" name="dataList" id="dataList">
           <thead>
             <tr>
-              <th>No.</th>
-              <th>ユーザID</th>
-              <th>ユーザ名</th>
-              <th>権限</th>
-              <th>利用可/不可</th>
-              <th>最終更新日時</th>
-              <th>登録日時</th>
+              <th class="col-lg-7  col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <label>No.</label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <label>ユーザID</label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <label>ユーザ名</label>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <label>権限</label>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <label>有効</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <label>最終更新日時</label>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <label>登録日時</label>
+                  </div>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr th:if="user" th:each="user, userStat:${usersList}">
-              <td th:text="${userStat.count}"></td>
-              <td>
-                <a th:href="@{'/maintenance/users/detail?userId=' + ${user.userId}}" th:text="${user.userId}"></a>
+              <td class="col-lg-7  col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <label th:text="${userStat.count}"></label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-truncate">
+                    <a th:href="@{'/maintenance/users/detail?userId=' + ${user.userId}}" th:text="${user.userId}"  th:title="${user.userId}"></a>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-truncate">
+                    <label th:text="${user.userName}" th:title="${user.userName}"></label>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <label th:text="${'ADMIN'.equals(user.roleName) ? '管理者' : 'USER'.equals(user.roleName) ? '一般' : 'ERROR'}"></label>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <label th:text="${user.isInvalid==1 ? '' : '〇'}"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
-              <td>
-                <label class="ellipsis" th:text="${user.userName}" th:title="${user.userName}"></label>
+              <td class="col-lg-5 col-md-12 col-sm-12 col-xs-12" >
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-truncate">
+                    <label th:text="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}" th:title="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></label>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-truncate">
+                    <label th:text="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}" th:title="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></label>
+                  </div>
+                </div>
               </td>
-              <td th:text="${'ADMIN'.equals(user.roleName) ? '管理者' : 'USER'.equals(user.roleName) ? '一般' : 'ERROR'}"></td>
-              <td th:text="${user.deleted==1 ? '不可' : '可'}"></td>
-              <td th:text="${#dates.format(user.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
-              <td th:text="${#dates.format(user.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
             </tr>
           </tbody>
         </table>

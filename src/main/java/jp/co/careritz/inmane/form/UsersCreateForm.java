@@ -31,8 +31,8 @@ public class UsersCreateForm {
   /** ログイン拒否時間. */
   private String loginDeniedAt;
   /** 削除済フラグ. */
-  @Pattern(regexp = "on", message = "{errors.validation.IllegalData.message}")
-  private String deleted;
+  @Pattern(regexp = "[0|1]", message = "{errors.validation.IllegalData.message}")
+  private String isInvalid;
   /** 更新者ID. */
   private String updaterId;
   /** 更新日時. */
@@ -90,12 +90,12 @@ public class UsersCreateForm {
     this.loginDeniedAt = loginDeniedAt;
   }
 
-  public String getDeleted() {
-    return deleted;
+  public String getIsInvalid() {
+    return isInvalid;
   }
 
-  public void setDeleted(String deleted) {
-    this.deleted = deleted;
+  public void setIsInvalid(String isInvalid) {
+    this.isInvalid = isInvalid;
   }
 
   public String getUpdaterId() {

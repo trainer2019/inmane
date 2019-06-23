@@ -24,7 +24,7 @@ public class UsersDto implements Serializable {
   /** ログイン拒否時間. */
   private Date loginDeniedAt;
   /** 削除済フラグ. */
-  private int deleted;
+  private int isInvalid;
   /** 更新者ID. */
   private String updaterId;
   /** 更新日時. */
@@ -82,12 +82,12 @@ public class UsersDto implements Serializable {
     this.loginDeniedAt = loginDeniedAt;
   }
 
-  public int getDeleted() {
-    return deleted;
+  public int getIsInvalid() {
+    return isInvalid;
   }
 
-  public void setDeleted(int deleted) {
-    this.deleted = deleted;
+  public void setIsInvalid(int isInvalid) {
+    this.isInvalid = isInvalid;
   }
 
   public String getUpdaterId() {

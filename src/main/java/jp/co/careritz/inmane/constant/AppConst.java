@@ -26,9 +26,12 @@ public class AppConst {
   public static final String ROLE_NAME_ALL = "ALL";
 
   /** 利用可/不可_利用可. **/
-  public static final String NON_DELETED_ON = "on";
-  /** 削除_ON. **/
-  public static final String DELETED_ON = "on";
+  public static final String NON_VALID_ON = "on";
+  /** 無効フラグ_OFF（有効）. **/
+  public static final String INVALID_OFF = "0";
+  /** 無効フラグ_ON（無効）. **/
+  public static final String INVALID_ON = "1";
+
 
   /* ---------------------------------------------------- */
   /* フォーマット */

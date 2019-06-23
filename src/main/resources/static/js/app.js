@@ -115,9 +115,9 @@ App.dialogConfirm = (message, callback) =>{
         text : message,
         type : "info",
         showCancelButton : true,
-        buttonsStyling : false,
+        buttonsStyling : true,
         confirmButtonText : 'はい',
-        cancelButtonText : 'いいえ',
+        cancelButtonText : 'キャンセル',
         confirmButtonClass : 'btn btn-md g-width-160--md g-mx-2 u-btn-blue',
         cancelButtonClass : 'btn btn-md g-width-160--md g-mx-2 u-btn-outline-gray-dark-v6',
       }).then((state) => {

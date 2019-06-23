@@ -37,59 +37,16 @@
   
   <main class="mb-auto">
     <div th:fragment="sideMenu">
-      <sideMenu id="sideMenu">
+      <sideMenu id="sideMenu" class="sticky">
         <!--/* ダイアログメッセージ */-->
         <div th:include="common/components :: dialogMessages"></div>
-        <div class="wrapper">
-          <!-- Sidebar  -->
-          <nav id="sidebar">
-            <div class="sidebar-header">
-              <h3>稼働状況管理<br>システム</h3>
-            </div>
-            <div th:with=
-               "menus = ${ {'TOP', '稼働状況情報', '契約情報', 'スタッフ情報', '取引先管理', '請求先情報', '案件管理', 'ユーザ管理'} }, 
-                paths = ${ {'__@{/top}__',
-                            '__@{/assignments}__',
-                            '__@{/contracts}__',
-                            '__@{/staffs}__',
-                            '__@{/clients}__',
-                            '__@{/bill_adresses}__',
-                            '__@{/projects}__',
-                            '__@{/maintenance/users/}__'
-                         } },
-                toPaths = ${ {'__@{/top}__',
-                             '__@{/assignments}__',
-                             '__@{/contracts}__',
-                             '__@{/staffs}__',
-                             '__@{/clients}__',
-                             '__@{/bill_adresses}__',
-                             '__@{/projects}__',
-                             '__@{/maintenance/users/search?roleName=ALL&nonDeleted=on}__'
-                         } },
-                roles   = ${ {'USER,ADMIN',
-                             'USER,ADMIN',
-                             'USER,ADMIN',
-                             'USER,ADMIN',
-                             'USER,ADMIN',
-                             'USER,ADMIN',
-                             'USER,ADMIN',
-                             'ADMIN'
-                         } },
-                uri   = ${#httpServletRequest.requestURI}">
-              <ul class="list-unstyled" th:each="menu, status : ${menus}">
-                <li th:if="${#strings.contains(roles[__${status.index}__], sessionUserRole)}" 
-                  th:with="bg=${#strings.contains(uri, paths[__${status.index}__])} ? 'background-color:#dc9edc;' : '' "
-                  th:style="${bg}">
-                  <a th:href="${toPaths[__${status.index}__]}">[[${menu}]]</a></li>
-              </ul>
-            </div>
-            <ul class="list-unstyled ctas">
-              <li><a class="article" href="javascript:App.logout();">ログアウト</a></li>
-            </ul>
-          </nav>
+        <div class="sticky">
+          <p>
+            <!--/* サイドメニュー */-->
+            <div th:include="common/components :: sideMenu"></div>
+          </p>
         </div>
       </sideMenu>
-            
       <!-- contents -->
       <div layout:fragment="contents">
         <contents></contents>

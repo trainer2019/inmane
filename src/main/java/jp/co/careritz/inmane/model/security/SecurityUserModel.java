@@ -46,7 +46,7 @@ public class SecurityUserModel extends UsersDto implements Serializable, UserDet
   @Override
   public boolean isEnabled() {
     // 1:削除ではない場合TRUE（使用可能）
-    return this.getDeleted() != 1;
+    return this.getIsInvalid() != 1;
   }
 
   @Override
@@ -57,7 +57,7 @@ public class SecurityUserModel extends UsersDto implements Serializable, UserDet
   public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
     this.authorities = authorities;
   }
-  
+
   /** ユーザ名（IDではない）を返す. */
   public String getUserName() {
     return super.getUserName();

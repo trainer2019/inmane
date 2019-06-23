@@ -2,9 +2,10 @@ package jp.co.careritz.inmane.controller;
 
 import static jp.co.careritz.inmane.constant.AppConst.APP_COMPLETE_MESSAGE_ID_FAILURE;
 import static jp.co.careritz.inmane.constant.AppConst.DATE_PATTERN_STD;
-import static jp.co.careritz.inmane.constant.AppConst.DELETED_ON;
 import static jp.co.careritz.inmane.constant.AppConst.EMPTY;
-import static jp.co.careritz.inmane.constant.AppConst.NON_DELETED_ON;
+import static jp.co.careritz.inmane.constant.AppConst.INVALID_OFF;
+import static jp.co.careritz.inmane.constant.AppConst.INVALID_ON;
+import static jp.co.careritz.inmane.constant.AppConst.NON_VALID_ON;
 import static jp.co.careritz.inmane.constant.AppConst.ROLE_NAME_ALL;
 import static jp.co.careritz.inmane.constant.AppConst.ROLE_NAME_USER;
 import static jp.co.careritz.inmane.util.AppUtil.convDateToStr;
@@ -71,7 +72,7 @@ public class UsersController extends AbstractAppController {
       log.debug("userId:" + form.getUserId());
       log.debug("userName:" + form.getUserName());
       log.debug("roleName:" + form.getRoleName());
-      log.debug("nonDeleted:" + form.getNonDeleted());
+      log.debug("nonIsInvalid:" + form.getNonIsInvalid());
     }
 
     if (bindingResult.hasErrors()) {
@@ -86,7 +87,7 @@ public class UsersController extends AbstractAppController {
     dto.setUserName(form.getUserName());
     dto.setRoleName(ROLE_NAME_ALL.equals(form.getRoleName()) ? EMPTY : form.getRoleName());
 
-    List<UsersDto> usersList = usersService.find(dto, NON_DELETED_ON.equals(form.getNonDeleted()));
+    List<UsersDto> usersList = usersService.find(dto, NON_VALID_ON.equals(form.getNonIsInvalid()));
 
     // 検索条件を設定
     model.addAttribute("usersSearchForm", form);
@@ -140,7 +141,7 @@ public class UsersController extends AbstractAppController {
     dto.setPassword(password);
     dto.setUserName(form.getUserName());
     dto.setRoleName(form.getRoleName());
-    dto.setDeleted(0);
+    dto.setIsInvalid(0);
     dto.setCreaterId(userDetails.getUserId());
     dto.setCreatedAt(now);
 
@@ -172,13 +173,13 @@ public class UsersController extends AbstractAppController {
       @RequestParam(name = "userId", defaultValue = EMPTY) String userId) {
 
     if (EMPTY.equals(userId)) {
-      return "redirect:/error/403";
+      return "redirect:/error/404";
     }
 
     UsersDto dto = usersService.findByPk(userId);
 
     if (dto == null) {
-      return "redirect:/error/403";
+      return "redirect:/error/404";
     }
     UsersCreateForm form = new UsersCreateForm();
     form.setUserId(dto.getUserId());
@@ -186,7 +187,7 @@ public class UsersController extends AbstractAppController {
     form.setRoleName(dto.getRoleName());
     form.setLoginFailureCount(dto.getLoginFailureCount());
     form.setLoginDeniedAt(convDateToStr(dto.getLoginDeniedAt(), DATE_PATTERN_STD));
-    form.setDeleted(dto.getDeleted() == 1 ? DELETED_ON : EMPTY);
+    form.setIsInvalid(dto.getIsInvalid() == 1 ? INVALID_ON : INVALID_OFF);
     form.setUpdaterId(dto.getUpdaterId());
     form.setUpdatedAt(convDateToStr(dto.getUpdatedAt(), DATE_PATTERN_STD));
     form.setCreaterId(dto.getCreaterId());
@@ -209,13 +210,13 @@ public class UsersController extends AbstractAppController {
       @RequestParam(name = "userId", defaultValue = EMPTY) String userId) {
 
     if (EMPTY.equals(userId)) {
-      return "redirect:/error/403";
+      return "redirect:/error/404";
     }
 
     UsersDto dto = usersService.findByPk(userId);
 
     if (dto == null) {
-      return "redirect:/error/403";
+      return "redirect:/error/404";
     }
 
     UsersCreateForm form = new UsersCreateForm();
@@ -224,7 +225,7 @@ public class UsersController extends AbstractAppController {
     form.setRoleName(dto.getRoleName());
     form.setLoginFailureCount(dto.getLoginFailureCount());
     form.setLoginDeniedAt(convDateToStr(dto.getLoginDeniedAt(), DATE_PATTERN_STD));
-    form.setDeleted(dto.getDeleted() == 1 ? DELETED_ON : EMPTY);
+    form.setIsInvalid(dto.getIsInvalid() == 1 ? INVALID_ON : INVALID_OFF);
     form.setUpdaterId(dto.getUpdaterId());
     form.setUpdatedAt(convDateToStr(dto.getUpdatedAt(), DATE_PATTERN_STD));
     form.setCreaterId(dto.getCreaterId());
@@ -245,9 +246,10 @@ public class UsersController extends AbstractAppController {
   @PostMapping("edit")
   public String update(Model model, @ModelAttribute @Valid UsersCreateForm form,
       BindingResult bindingResult, @AuthenticationPrincipal SecurityUserModel userDetails,
-      RedirectAttributes redirectAttributes, HttpServletRequest req, HttpServletResponse res) {
+      RedirectAttributes redirectAttributes) {
 
     if (bindingResult.hasErrors()) {
+      bindingResult.getFieldErrors().stream().forEach(System.out::println);
       model.addAttribute("usersCreateForm", form);
       return "users_detail";
     }
@@ -260,8 +262,8 @@ public class UsersController extends AbstractAppController {
     dto.setPassword(password);
     dto.setUserName(form.getUserName());
     dto.setRoleName(form.getRoleName());
-    dto.setDeleted(
-        isNotEmptyStr(form.getDeleted()) && DELETED_ON.equals(form.getDeleted()) ? 1 : 0);
+    dto.setIsInvalid(
+        isNotEmptyStr(form.getIsInvalid()) && INVALID_ON.equals(form.getIsInvalid()) ? 1 : 0);
     dto.setUpdaterId(userDetails.getUserId());
     dto.setUpdatedAt(now);
 
@@ -279,5 +281,35 @@ public class UsersController extends AbstractAppController {
       return "users_detail";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();
+  }
+
+  /**
+   * ユーザ更新処理を実行する.
+   * 
+   * @param userId
+   *
+   * @return ユーザ編集画面
+   */
+  @PostMapping("delete")
+  public String delete(Model model,
+      @RequestParam(name = "userId", defaultValue = EMPTY) String userId,
+      @AuthenticationPrincipal SecurityUserModel userDetails,
+      RedirectAttributes redirectAttributes) {
+
+    if (EMPTY.equals(userId)) {
+      return "redirect:/error/404";
+    }
+
+    int result = usersService.deleteByPk(userId);
+
+    if (result == 0) {
+      // Flashスコープでメッセージを設定
+      setCompleteMessageSuccess(redirectAttributes, propertyConfig.get("ok.app.complete"));
+      return "redirect:/maintenance/users/search?roleName=ALL&nonIsInvalid=on";
+    } else {
+      // Flashスコープでメッセージを設定
+      setCompleteMessageFailure(redirectAttributes, propertyConfig.get("error.app.fatal"));
+      return "redirect:/maintenance/users/detail?userId=" + userId;
+    }
   }
 }

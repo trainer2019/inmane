@@ -107,23 +107,22 @@
                 </tr>
                 <tr>
                   <!-- /* start 利用可/不可 */ -->
-                  <td class="h_data" colspan="1">利用可/不可</td>
+                  <td class="h_data" colspan="1">有効/無効</td>
                   <div th:if="${isDetail}">
                     <td colspan="1">
-                      <label th:text="*{deleted=='on' ? '不可' : '可'}"></label>
+                      <label th:text="*{isInvalid=='1' ? '無効' : '有効'}"></label>
+                      <input type="hidden" th:field="*{isInvalid}"/>
                     </td>
                   </div>
                   <div th:if="${isEdit}">
                     <td colspan="1">
-                      <input type="checkbox" id="delete" th:field="*{deleted}" value="on" />
-                      <div>
-                      <br />
-                      <span th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}" class="errorMsg">error!</span>
-                      <label style="font-size: 12px;">※チェック有の場合は利用不可、チェック無の場合は利用可として更新ができます。</label>
+                      <input id="radioVaild" type="radio" value="0" th:field="*{isInvalid}" checked="checked" />
+                      <label>有効</label>
+                      <input id="radioInvalid" type="radio" value="1" th:field="*{isInvalid}" required/>
+                      <label>無効</label>
+                      <br/>
+                      <span th:if="${#fields.hasErrors('isInvalid')}" th:errors="*{isInvalid}" class="errorMsg">error!</span>
                     </td>
-                  </div>
-                  <!-- /* end 利用可/不可 */ -->
-                </tr>
                 <tr>
                   <td class="h_data" colspan="1">最終更新者</td>
                   <td colspan="3">
@@ -154,20 +153,26 @@
                 </tr>
                 <tr>
                   <!-- /* start ボタン */ -->
-                  <td></td>
-                  <td colspan="3" th:object="${usersCreateForm}" th:with="msg= '__#{confirm.app.execution}__'">
+                  <td colspan="1" th:with="msg= '__#{confirm.app.execution}__'">
+                    <button th:if="${isDetail}" type="button" th:userId="*{userId}" style="background: #fe8b9a;"
+                      th:onclick="'Users.submitHandler(\'deleteForm\', \''+ __${#strings.replace(msg, '{name}', '削除')}__ + '\')'">削除</button>
+                  </td>
+                  <td colspan="3" th:with="msg= '__#{confirm.app.execution}__'">
                     <button th:if="${isEdit}" type="button" id="update" 
                       th:onclick="'Users.submitHandler(\'createForm\', \''+ __${#strings.replace(msg, '{name}', '更新')}__ + '\')'">更新</button>
                     <button th:if="${isDetail}" type="button" th:data="@{/maintenance/users/edit}" th:userId="*{userId}"
                       th:onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
                     <button type="button"
-                      th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonDeleted=on'
+                      th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonIsInvalid=on'
                                    : @{/maintenance/users/detail} +'?userId=' + *{userId}"
                       th:onclick="location.href=this.getAttribute('data')">戻る</button>
                   </td>
                   <!-- /* end ボタン */ -->
                 </tr>
               </table>
+            </form>
+            <form id="deleteForm" method="post" th:action="@{/maintenance/users/delete}">
+              <input type="hidden" name="userId" th:value="${usersCreateForm.userId}" />
             </form>
           </div>
         </div>
