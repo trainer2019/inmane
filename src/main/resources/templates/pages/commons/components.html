@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+]<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <main> <!--/* Modalダイアログ */-->
+  <div th:fragment="modalDialog">
+    <modalDialog>
+    <style>
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	display: block;
+}
+
+.closeMark {
+	color: #aaaaaa;
+	float: right;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.closeMark:hover, .closeMark:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+</style>
+    <div id="modalDialog" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="closeMark" onclick="">&times;</span>
+        <p id="msg"></p>
+        <button id="btnOk">はい</button>
+        <button id="btnCancel">キャンセル</button>
+      </div>
+    </div>
+    </modalDialog>
+
+    <!--/* ダイアログメッセージ */-->
+    <div th:fragment="dialogMessages">
+      <dialogMessages>
+        <input type="hidden" id="appCompleteMessageSuccess" th:value='${appCompleteMessageSuccess}' />
+        <input type="hidden" id="appCompleteMessageWarning" th:value='${appCompleteMessageWarning}' />
+        <input type="hidden" id="appCompleteMessageFailure" th:value='${appCompleteMessageFailure}' />
+      </dialogMessages>
+    </div>
+    <!--/* サイドメニュー */-->
+    <div th:fragment="sideMenu">
+      <sideMenu>
+        <div class="wrapper">
+          <nav id="sidebar">
+            <div class="sidebar-header">
+              <h3>稼働状況管理<br>システム</h3>
+            </div>
+            <div th:with=
+               "menus = ${ {
+                            'Top', 
+                            'スタッフ情報', 
+                            '取引先管理', 
+                            '請求先情報', 
+                            '案件管理'
+                          } }, 
+                paths = ${ {
+                            '__@{/top}__',
+                            '__@{/staffs}__',
+                            '__@{/clients}__',
+                            '__@{/bill_adresses}__',
+                            '__@{/projects}__'
+                          } }, 
+                toPaths = ${ {
+                            '__@{/top}__',
+                            '__@{/staffs}__',
+                            '__@{/clients}__',
+                            '__@{/bill_adresses}__',
+                            '__@{/projects}__'
+                          } }, 
+                roles   = ${ {
+                            'USER,ADMIN',
+                            'USER,ADMIN',
+                            'USER,ADMIN',
+                            'USER,ADMIN',
+                            'USER,ADMIN'
+                          } }, 
+                uri      = ${#httpServletRequest.requestURI},
+                isMente = ${#strings.contains(uri, '__@{/maintenance/users/}__')}
+                "
+              >
+              <ul class="list-unstyled" th:each="menu, status : ${menus}">
+                <li th:if="${not (isMente) and #strings.contains(roles[__${status.index}__], sessionUserRole)}" 
+                  th:with="bg=${#strings.contains(uri, paths[__${status.index}__])} ? 'background-color:#dc9edc;' : '' "
+                  th:style="${bg}">
+                  <a th:href="${toPaths[__${status.index}__]}" th:text="${menu}"></a></li>
+              </ul>
+              <ul class="list-unstyled">
+                <li th:if="${isMente}" style="background-color:#dc9edc;">
+                  <a th:href="@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}">ユーザ管理</a></li>
+              </ul>
+            </div>
+            <br/>
+            <ul class="list-unstyled">
+              <li>
+                <a th:href="@{/index}"><i class="far fa-arrow-alt-circle-left" style="padding-right: 5px;"></i>戻る </a>
+              </li>
+            </ul>
+            <ul class="list-unstyled ctas">
+              <li><a class="article" href="javascript:App.logout();">ログアウト</a></li>
+            </ul>
+          </nav>
+        </div>
+      </sideMenu>
+    </div>
+  </main>
+</body>
+</html>

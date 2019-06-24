@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>請求先情報</title>
+<meta th:include="commons/layout :: head" th:remove="tag"></meta>
+</head>
+<body>
+  <div class="wrapper">
+    <!--/* ▼ サイドメニュー表示 */-->
+    <div th:include="commons/layout :: sideMenu"></div>
+    <!--/* ▲ サイドメニュー表示 */-->
+
+    <div class="container">
+      <header th:replace="commons/layout :: header('請求先情報')"></header>
+    </div>
+  </div>
+  <!--/* ▼ フッター表示 */-->
+  <div th:include="commons/layout :: footer"></div>
+  <!--/* ▲ フッター表示 */-->
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>稼働状況情報</title>
+<meta th:include="commons/layout :: head" th:remove="tag"></meta>
+<link rel="stylesheet" th:href="@{/css/page/login.css}" />
+<style type="text/css">
+.list-group-item {
+    background: rgba(0,0,255,0.0);
+    border: none;
+}
+.list-group-item:hover {
+    background: rgba(0,0,255,0.5);
+    color: #fff;
+}
+</style>
+</head>
+<body class="bg-image">
+  <div class="bg-mask fadein">
+    <div class="page-header text-center" style="padding-top: 25px;">
+      <h2 style="margin-top: 20px;">
+        <img th:src="@{images/logo.svg}" width="70px" height="70px" style="padding: 5px;"> ようこそ
+      </h2>
+    </div>
+    <br />
+      <div class="container" style="margin-top: 20px;">
+        <nav class="navbar">
+          <div class="d-block flex-row mx-md-auto mx-0">
+            <ul class="list-unstyled">
+              <li><a class="list-group-item" th:href="@{/assignments}"><h5>稼働管理状況・契約</h5></a></li>
+              <li><a class="list-group-item" th:href="@{/top}"><h5>スタッフ・取引先・請求先・案件</h5></a></li>
+              <li><a th:if="${'ADMIN'.equals(sessionUserRole)}" class="list-group-item" th:href="@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}"><h5>ユーザ情報メンテナンス</h5></a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    <!--/* ▼ フッター表示 */-->
+    <div th:include="commons/layout :: footer"></div>
+    <!--/* ▲ フッター表示 */-->
+  </div>
+</body>
+</html>

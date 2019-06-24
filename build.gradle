@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	// Development
+	//compile project('inmane-businesses')
 	compile files('lib/ojdbc8.jar')
 	compile 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

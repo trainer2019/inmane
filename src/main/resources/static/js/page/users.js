@@ -24,3 +24,9 @@ Users.submitHandler = (formId, confirmMsg) => {
     return val;
   });
 }
+
+Users.pwCheckOnchangeHandler = () => {
+  let pw = document.getElementById("password");
+  let pwCheck = document.getElementById("password-check");
+  pw.setAttribute("type", pwCheck.checked ? "text" : "password");
+}

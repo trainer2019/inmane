@@ -22,7 +22,7 @@
     </encoder>
   </appender>
 
-  <logger name="jp.co.careritz.inmane" level="trace"></logger>
+  <logger name="jp.co.careritz.inmane.commons" level="trace"></logger>
 
   <root level="info">
     <appender-ref ref="FILE" />
