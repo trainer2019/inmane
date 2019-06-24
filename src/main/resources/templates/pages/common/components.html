@@ -73,44 +73,20 @@
             </div>
             <div th:with=
                "menus = ${ {
-                            'TOP', 
                             '稼働状況情報', 
-                            '契約情報', 
-                            'スタッフ情報', 
-                            '取引先管理', 
-                            '請求先情報', 
-                            '案件管理', 
-                            'ユーザ管理'
+                            '契約情報'
                           } }, 
                 paths = ${ {
-                            '__@{/top}__',
                             '__@{/assignments}__',
-                            '__@{/contracts}__',
-                            '__@{/staffs}__',
-                            '__@{/clients}__',
-                            '__@{/bill_adresses}__',
-                            '__@{/projects}__',
-                            '__@{/maintenance/users/}__'
+                            '__@{/contracts}__'
                           } }, 
                 toPaths = ${ {
-                            '__@{/top}__',
                             '__@{/assignments}__',
-                            '__@{/contracts}__',
-                            '__@{/staffs}__',
-                            '__@{/clients}__',
-                            '__@{/bill_adresses}__',
-                            '__@{/projects}__',
-                            '__@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}__'
+                            '__@{/contracts}__'
                           } }, 
                 roles   = ${ {
                             'USER,ADMIN',
-                            'USER,ADMIN',
-                            'USER,ADMIN',
-                            'USER,ADMIN',
-                            'USER,ADMIN',
-                            'USER,ADMIN',
-                            'USER,ADMIN',
-                            'ADMIN'
+                            'USER,ADMIN'
                           } }, 
                 uri   = ${#httpServletRequest.requestURI}">
               <ul class="list-unstyled" th:each="menu, status : ${menus}">
@@ -120,6 +96,10 @@
                   <a th:href="${toPaths[__${status.index}__]}">[[${menu}]]</a></li>
               </ul>
             </div>
+            <br/>
+            <ul class="list-unstyled">
+              <li><a th:href="@{/index}"> <span><i class="far fa-arrow-alt-circle-left" style="padding-right: 5px;"></i>戻る </a></li>
+            </ul>
             <ul class="list-unstyled ctas">
               <li><a class="article" href="javascript:App.logout();">ログアウト</a></li>
             </ul>

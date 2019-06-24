@@ -1,4 +1,4 @@
-package jp.co.careritz.inmane.constant;
+package jp.co.careritz.inmane.businesses.constant;
 
 /**
  * アプリケーション共通定数定義.

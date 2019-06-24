@@ -1,10 +1,11 @@
-package jp.co.careritz.inmane.controller;
+package jp.co.careritz.inmane.businesses.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import jp.co.careritz.inmane.controller.commons.AbstractAppController;
+import jp.co.careritz.inmane.commons.controller.common.AbstractAppController;
+
 
 /**
  * 稼働状況情報コントローラ.
