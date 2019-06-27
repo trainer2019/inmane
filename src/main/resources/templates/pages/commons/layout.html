@@ -2,7 +2,7 @@
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
   xmlns:sec="http://www.springframework.org/schema/security"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:fragment="head">
+<head th:fragment="head(pageTitle)">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,17 +11,21 @@
 <!-- Favicon -->
 <link rel="icon" type="images/x-icon" th:href="@{/images/favicon.ico}" />
 
-<title>稼働状況管理システム</title>
+<title th:text="'稼働状況管理' + ${pageTitle == '' ? '' : ' | ' + pageTitle }"></title>
 
 <!-- CSS Global Compulsory -->
 <link rel="stylesheet" th:href="@{/css/app.css}" />
-<link rel="stylesheet" th:href="@{/unify/assets/vendor/bootstrap/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome-5.9.0/css/all.css}" />
 <link rel="stylesheet" th:href="@{/plugins/sweetalert2-7.24.3/dist/sweetalert2.min.css}" />
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/bootstrap/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome/css/all.css}" />
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome/fontawesome.min.css}"/>
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome/ionicons.min.css}"/>
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome/daterangepicker.css}"/>
+<link rel="stylesheet" th:href="@{/unify/assets/vendor/fontawesome/icheck-bootstrap.min.css}"/>
 
 <!-- JS Global Compulsory -->
 <script th:src="@{/unify/assets/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/unify/assets/vendor/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{/unify/assets/vendor/jquery-3.3.1/jquery.min.js}"></script>
 <script th:src="@{/unify/assets/vendor/popper.min.js}"></script>
 <script th:src="@{/unify/assets/vendor/bootstrap/bootstrap.min.js}"></script>
 <script th:src="@{/unify/assets/vendor/bootstrap/bootstrap.min.js}"></script>
@@ -31,28 +35,22 @@
 
 <body class="d-flex flex-column" style="min-height: 100vh">
   
-  <div th:fragment="header(text)">
-    <header>
-      <h5 th:text="${text}"></h5>
-    </header>
-  </div>
+  <header th:fragment="header(text)" style="margin-top: 3px; margin-bottom: 3px; border-left: 3px solid #7386D5;">
+    <div>
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <span class="pageTitle" th:text="${text}"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
   
   <main class="mb-auto">
     <div th:fragment="sideMenu">
-      <sideMenu id="sideMenu" class="sticky">
-        <!--/* ダイアログメッセージ */-->
-        <div th:include="commons/components :: dialogMessages"></div>
-        <div class="sticky">
-          <p>
-            <!--/* サイドメニュー */-->
-            <div th:include="commons/components :: sideMenu"></div>
-          </p>
-        </div>
-      </sideMenu>
-      <!-- contents -->
-      <div layout:fragment="contents">
-        <contents></contents>
-      </div>
+       <!--/* サイドメニュー */-->
+      <div th:include="commons/components :: sideMenu"></div>
+      <!--/* ダイアログメッセージ */-->
+      <div th:include="commons/components :: dialogMessages"></div>
     </div>
   </main>
   <!-- Copyright Footer -->

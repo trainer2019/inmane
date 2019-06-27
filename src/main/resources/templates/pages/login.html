@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title>Login</title>
-<meta th:include="commons/layout :: head" th:remove="tag"></meta>
+<meta th:include="commons/layout :: head('Login')" th:remove="tag"></meta>
 <link rel="stylesheet" th:href="@{/css/page/login.css}" />
 </head>
 
@@ -11,7 +9,8 @@
   <div class="bg-mask fadein">
     <div class="page-header text-center" style="padding-top: 25px;">
       <h2 style="margin-top:20px;">
-        <img th:src="@{images/logo.svg}" width="70px" height="70px" style="padding: 5px;"> In Mane -稼働状況管理システム-
+        <img th:src="@{images/logo.png}" class="rounded-circle" width="85em" height="70em" style="padding: 5px; opacity: .6">
+        <span>稼働状況管理システム</span>
       </h2>
     </div>
     <br />

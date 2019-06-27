@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="commons/users/users_layout :: head('ユーザ検索')" th:remove="tag">
 <title>ユーザ管理</title>
-<meta th:include="commons/users/users_layout :: head" th:remove="tag"></meta>
 <script>
   $(() => {
       var outer = $("<div>").css({
@@ -28,11 +27,17 @@
     <!--/* ▼ サイドメニュー表示 */-->
     <div th:include="commons/layout :: sideMenu"></div>
     <!--/* ▲ サイドメニュー表示 */-->
+
     <div class="container">
+      <!--/* ▼ ヘッダー表示 */-->
+      <header th:replace="commons/users/users_layout :: header('ユーザ管理')"></header>
+      <!--/* ▲ ヘッダー表示 */-->
+      
       <!--/* ▼ タブ表示 */-->
       <div th:include="commons/users/users_layout :: tabs"></div>
       <!--/* ▲ タブ表示 */-->
 
+      <!--/* ▼ タブ内容 */-->
       <div class="tab">
         <div class="boardArea">
           <!--/* ▼ 検索フォーム */-->
@@ -95,7 +100,7 @@
         </div>
         <!--/* ▲ 検索フォーム */-->
       </div>
-
+      <!--/* ▲ タブ内容 */-->
       
       <div class="count" >
         <!--/* ▼ 検索結果件数 */-->

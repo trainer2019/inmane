@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>ユーザ管理</title>
-<meta th:include="commons/users/users_layout :: head" th:remove="tag"></meta>
+<head th:with="uri      = ${#httpServletRequest.requestURI}
+                 , isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}"
+        th:include="commons/users/users_layout :: head(${isDetail} ? 'ユーザ詳細' : 'ユーザ編集')">
 </head>
 <body>
   <div class="wrapper">
@@ -11,9 +11,9 @@
     <!--/* ▲ サイドメニュー表示 */-->
     <div class="container">
       <div
-        th:with="uri      = ${#httpServletRequest.requestURI},
-                    isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')},
-                    isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
+        th:with="uri      = ${#httpServletRequest.requestURI}
+                 , isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')}
+                 , isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
         <div>
           <header th:replace="commons/layout :: header(${isDetail} ? 'ユーザ詳細' : 'ユーザ編集')"></header>
         </div>

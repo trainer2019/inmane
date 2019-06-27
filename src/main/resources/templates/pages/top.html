@@ -2,17 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>稼働状況情報</title>
-<meta th:include="commons/layout :: head" th:remove="tag"></meta>
+<head th:include="commons/layout :: head('Home')">
+<script>
+window.onload = () => {
+  scroll_effect();
+
+  $(window).scroll(() => {
+  	scroll_effect();
+  });
+
+  const scroll_effect = () => {
+    $('.effect-fade').each(() => {
+      var elemPos = $(this).offset().top;
+      var scroll = $(window).scrollTop();
+      var windowHeight = $(window).height();
+      if (scroll > elemPos - windowHeight){
+        $(this).addClass('effect-scroll');
+      }
+    });
+  }
+};
+
+</script>
+<style type="text/css">
+.effect-fade {
+  opacity : 0;
+  transform : translate(0, 45px);
+  transition : all 500ms;
+}
+
+.effect-fade.effect-scroll {
+  opacity : 1;
+  transform : translate(0, 0);
+}
+</style>
 </head>
 <body>
   <div class="wrapper">
     <!--/* ▼ サイドメニュー表示 */-->
     <div th:include="commons/layout :: sideMenu"></div>
     <!--/* ▲ サイドメニュー表示 */-->
-
     <div class="container">
-      <header th:replace="commons/layout :: header('お知らせ')"></header>
+      <!--/* ▼ ヘッダー表示 */-->
+      <header th:replace="commons/layout :: header('Top')"></header>
+      <!--/* ▲ ヘッダー表示 */-->
+      <div class="effect-fade">
+        <img alt="" src="">
+      </div>
     </div>
   </div>
   <!--/* ▼ フッター表示 */-->

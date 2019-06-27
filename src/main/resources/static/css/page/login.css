@@ -42,3 +42,13 @@
   height: 100%;
   background: rgba(255,255,255,0.5);
 }
+
+.list-group-item {
+	background: rgba(0, 0, 255, 0.0);
+	border: none;
+}
+
+.list-group-item:hover {
+	background: rgba(0, 0, 255, 0.5);
+	color: #fff;
+}
