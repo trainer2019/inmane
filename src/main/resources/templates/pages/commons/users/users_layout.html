@@ -24,13 +24,15 @@
         <!--/* ▼ タブ表示 */-->
         <div
           th:with="tabs = ${ {'ユーザー検索', 'ユーザー登録'} }, 
-                        paths = ${ {'__@{/maintenance/users/search}__',
-                                    '__@{/maintenance/users/new}__'
-                                } },
-                        toPaths = ${ {'__@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}__',
-                                      '__@{/maintenance/users/new}__'
-                                  } },
-                        uri   = ${#httpServletRequest.requestURI}">
+                    paths = ${ {
+                                '__@{/maintenance/users/search}__'
+                              , '__@{/maintenance/users/new}__'
+                            } },
+                    toPaths = ${ {
+                                '__@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}__'
+                              , '__@{/maintenance/users/new}__'
+                            } },
+                    uri   = ${#httpServletRequest.requestURI}">
           <ul class="nav nav-tabs" id="tab" role="tablist">
             <div th:each="tabNm, status : ${tabs}">
               <li class="nav-item">
@@ -39,8 +41,8 @@
                   data-toggle="tab" role="tab" aria-controls="${toPaths[__${status.index}__]}" 
                   th:aria-selected="${#strings.contains(uri, paths[__${status.index}__])} ? 'true' : 'false'" 
                   th:data="${toPaths[__${status.index}__]}" 
-                  th:onclick="window.location.href=this.getAttribute('data')">
-                  <h5 th:text="${tabNm}"></h5>
+                  onclick="window.location.href=this.getAttribute('data')">
+                  <span class="pageTitle" th:text="${tabNm}"></span>
                 </a>
               </li>
             </div>

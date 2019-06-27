@@ -160,11 +160,11 @@
                     <button th:if="${isEdit}" type="button" id="update" 
                       th:onclick="'Users.submitHandler(\'createForm\', \''+ __${#strings.replace(msg, '{name}', '更新')}__ + '\')'">更新</button>
                     <button th:if="${isDetail}" type="button" th:data="@{/maintenance/users/edit}" th:userId="*{userId}"
-                      th:onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
+                      onclick="location.href=this.getAttribute('data') + '?userId=' + this.getAttribute('userId')">編集</button>
                     <button type="button"
                       th:data="${isDetail} ? @{/maintenance/users/search} +'?roleName=ALL&nonIsInvalid=on'
                                    : @{/maintenance/users/detail} +'?userId=' + *{userId}"
-                      th:onclick="location.href=this.getAttribute('data')">戻る</button>
+                      onclick="location.href=this.getAttribute('data')">戻る</button>
                   </td>
                   <!-- /* end ボタン */ -->
                 </tr>

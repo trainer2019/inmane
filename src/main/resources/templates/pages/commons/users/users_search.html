@@ -29,10 +29,6 @@
     <!--/* ▲ サイドメニュー表示 */-->
 
     <div class="container">
-      <!--/* ▼ ヘッダー表示 */-->
-      <header th:replace="commons/users/users_layout :: header('ユーザ管理')"></header>
-      <!--/* ▲ ヘッダー表示 */-->
-      
       <!--/* ▼ タブ表示 */-->
       <div th:include="commons/users/users_layout :: tabs"></div>
       <!--/* ▲ タブ表示 */-->
@@ -109,7 +105,7 @@
       </div>
       <div>
         <!--/* ▼ 検索結果リスト */-->
-        <table class="table table-fixed table-hover table-stripe border" name="dataList" id="dataList">
+        <table class="table table-fixed table-hover table-stripe border" name="dataList" id="dataList" >
           <thead>
             <tr>
               <th class="col-lg-7  col-md-12 col-sm-12 col-xs-12">

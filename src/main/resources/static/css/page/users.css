@@ -77,7 +77,7 @@ ul li {
 }
 
 .table-fixed tbody {
-	height: 41vh;
+	height: 35vh;
 	overflow-x: auto;
 	overflow-y:scroll;
 	width: 100%;
