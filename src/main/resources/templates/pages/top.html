@@ -3,39 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <head th:include="commons/layout :: head('Home')">
-<script>
-window.onload = () => {
-  scroll_effect();
-
-  $(window).scroll(() => {
-  	scroll_effect();
-  });
-
-  const scroll_effect = () => {
-    $('.effect-fade').each(() => {
-      var elemPos = $(this).offset().top;
-      var scroll = $(window).scrollTop();
-      var windowHeight = $(window).height();
-      if (scroll > elemPos - windowHeight){
-        $(this).addClass('effect-scroll');
-      }
-    });
-  }
-};
-
-</script>
-<style type="text/css">
-.effect-fade {
-  opacity : 0;
-  transform : translate(0, 45px);
-  transition : all 500ms;
-}
-
-.effect-fade.effect-scroll {
-  opacity : 1;
-  transform : translate(0, 0);
-}
-</style>
 </head>
 <body>
   <div class="wrapper">
@@ -46,8 +13,13 @@ window.onload = () => {
       <!--/* ▼ ヘッダー表示 */-->
       <header th:replace="commons/layout :: header('Top')"></header>
       <!--/* ▲ ヘッダー表示 */-->
-      <div class="effect-fade">
-        <img alt="" src="">
+      <div id="slide" class="hidden text-center">
+        <img th:src="@{/images/maxresdefault.jpg}" alt="abe" class="rounded-circle" width="70%" height="70%" style="opacity: .2" />
+        <script type="text/javascript">
+          $(document).ready(() => {
+            $('#slide').show('slow');
+          });
+        </script>
       </div>
     </div>
   </div>
