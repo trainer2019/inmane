@@ -12,9 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import jp.co.careritz.inmane.commons.constant.AppConst;
-import jp.co.careritz.inmane.commons.service.security.SecurityLoginFailureHandler;
-import jp.co.careritz.inmane.commons.service.security.SecurityLoginProvider;
-import jp.co.careritz.inmane.commons.service.security.SecurityLoginService;
+import jp.co.careritz.inmane.commons.users.service.security.SecurityLoginFailureHandler;
+import jp.co.careritz.inmane.commons.users.service.security.SecurityLoginProvider;
+import jp.co.careritz.inmane.commons.users.service.security.SecurityLoginService;
 
 
 /**

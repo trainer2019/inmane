@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="commons/users/users_layout :: head('ユーザ検索')" th:remove="tag">
-<title>ユーザ管理</title>
-<script>
-  $(() => {
-      var outer = $("<div>").css({
-              visibility: "hidden",
-              width: 100,
-              overflow: "scroll",
-          }).appendTo("body"),
-          width = $("<div>").css({
-              width: "100%"
-          }).appendTo(outer).outerWidth(),
-          result = 0;
-
-      outer.remove();
-      result = 100 - width;
-      $(".table-fixed thead").css({
-          paddingRight: result
-      });
-  });
-</script>
 </head>
 <body>
   <div class="wrapper">
