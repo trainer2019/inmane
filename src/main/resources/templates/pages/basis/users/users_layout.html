@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{basis/layout}">
+  
+<head th:fragment="head(pageTitle)">
+<meta th:unless="${#strings.isEmpty(pageTitle)}" th:include="basis/layout :: head(${pageTitle})" th:remove="tag"></meta>
+<link rel="stylesheet" th:href="@{/css/page/users.css}" />
+<script th:src="@{/js/page/users.js}"></script>
+</head>
+
+<body>
+  <main>
+  <div layout:fragment="contents">
+ 
+    <!--/* ▼ ヘッダー表示 */-->
+    <div layout:fragment="header(contentsTitle)">
+      <div th:unless="${#strings.isEmpty(contentsTitle)}" th:include="basis/components :: header(${contentsTitle})"></div>
+    </div>
+    <!--/* ▲ ヘッダー表示 */-->
+    
+    <div th:fragment="tabs">
+      <tabs id="tabs">
+        <!--/* ▼ タブ表示 */-->
+        <div
+          th:with="tabs = ${ {'ユーザー検索', 'ユーザー登録'} }, 
+                    paths = ${ {
+                                '__@{/maintenance/users/search}__'
+                              , '__@{/maintenance/users/new}__'
+                            } },
+                    toPaths = ${ {
+                                '__@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}__'
+                              , '__@{/maintenance/users/new}__'
+                            } },
+                    uri   = ${#httpServletRequest.requestURI}">
+          <ul class="nav nav-tabs" id="tab" role="tablist">
+            <div th:each="tabNm, status : ${tabs}">
+              <li class="nav-item">
+                <!--/* 現在のURIを見て、タブの背景色が変わるようクラスを設定 */-->
+                <a href="#" th:class="${#strings.contains(uri, paths[__${status.index}__])} ? 'nav-link active' : 'nav-link'" 
+                  data-toggle="tab" role="tab" aria-controls="${toPaths[__${status.index}__]}" 
+                  th:aria-selected="${#strings.contains(uri, paths[__${status.index}__])} ? 'true' : 'false'" 
+                  th:data="${toPaths[__${status.index}__]}" 
+                  onclick="window.location.href=this.getAttribute('data')">
+                  <span class="pageTitle" th:text="${tabNm}"></span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </div>
+      <!--/* ▲ タブ表示 */-->
+      </tabs>
+      <!--/* ▼ タブコンテンツ */-->
+      <div layout:fragment="tabContents"></div>
+      <!--/* ▲ タブコンテンツ */-->
+    </div>
+  </div>
+
+  </main>
+</body>
+</html>

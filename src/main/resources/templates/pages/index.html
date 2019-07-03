@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{basis/layout}">
 <head>
-<meta charset="UTF-8" />
-<meta th:include="commons/layout :: head('ようこそ')" th:remove="tag"></meta>
+<meta th:include="basis/layout :: head('ようこそ')" th:remove="tag"></meta>
 <link rel="stylesheet" th:href="@{/css/page/login.css}" />
-
 </head>
 <body class="bg-image">
-  <div class="bg-mask fadein">
+  <main layout:fragment="main" class="bg-mask fadein">
     <div class="page-header text-center" style="padding-top: 25px;">
       <h2 style="margin-top: 20px;">
         <i class="fas fa-cat"></i>
@@ -25,7 +26,7 @@
               </a>
             </li>
             <li>
-              <a class="list-group-item" th:href="@{/top}">
+              <a class="list-group-item" th:href="@{/home}">
                 <span>スタッフ・取引先・請求先・案件</span>
               </a>
             </li>
@@ -40,9 +41,6 @@
         </div>
       </nav>
     </div>
-    <!--/* ▼ フッター表示 */-->
-    <div th:include="commons/layout :: footer"></div>
-    <!--/* ▲ フッター表示 */-->
-  </div>
+  </main>
 </body>
 </html>

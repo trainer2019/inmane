@@ -59,15 +59,16 @@ ul li {
 }
 
 [name="dataList"] {
-	background: #fff;
+	background: #f2f2f2;
 }
 
 [name="dataList"] tr:nth-child(odd)  td {
+	background-color: #fff;
 	color: #000000;
 }
 
 [name="dataList"] tr:nth-child(even) td {
-	background-color: #f2f2f2;
+	background-color: #e8e8ff;
 	color: #000000;
 }
 
@@ -75,9 +76,20 @@ ul li {
 	background-color: #9bcdff;
 	transition: all 1.0s;
 }
+.table {
+	margin-bottom: 2.0em;
+}
+
+table td, .table th {
+	padding: .25rem!important;
+}
+
+.table-fixed thead {
+	width: calc(100% - 17px);
+}
 
 .table-fixed tbody {
-	height: 35vh;
+	height: calc(48vh  - 1.7em);
 	overflow-x: auto;
 	overflow-y:scroll;
 	width: 100%;
@@ -89,16 +101,11 @@ ul li {
 	display: block;
 }
 
-.table-fixed tr:after {
-	content: "";
-	display: block;
-	visibility: hidden;
-	clear: both;
-}
+
 
 .table-fixed tbody td, .table-fixed thead>tr>th {
 	float: left;
-	height: 2.2em;
+	height: 2.1em;
 	width: 100%;
 	overflow: hidden;
 	white-space: nowrap;
@@ -112,8 +119,13 @@ ul li {
 	vertical-align: top;
 	padding: 8px;
 	background: #51596a;
-	text-transform: uppercase;
 	color: #ffffff;
+}
+.table>tbody>tr>th, .table>tbody>tr>td {
+	font-size: .9em;
+	font-weight: 400;
+	border-bottom: 0;
+	letter-spacing: 1px;
 }
 
 .count {

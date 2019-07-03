@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basis/layout}">
 <head>
-<meta th:include="commons/layout :: head('Login')" th:remove="tag"></meta>
+<meta th:include="basis/layout :: head('Login')" th:remove="tag"></meta>
 <link rel="stylesheet" th:href="@{/css/page/login.css}" />
 </head>
 
 <body class="bg-image">
-  <div class="bg-mask fadein">
+  <main layout:fragment="main" class="bg-mask fadein">
     <div class="page-header text-center" style="padding-top: 25px;">
       <h2 style="margin-top:20px;">
         <img th:src="@{images/logo.png}" class="rounded-circle" width="85em" height="70em" style="padding: 5px; opacity: .6">
@@ -35,9 +35,7 @@
         </div>
       </div>
     </div>
-    <!--/* ▼ フッター表示 */-->
-    <div th:include="commons/layout :: footer"></div>
-    <!--/* ▲ フッター表示 */-->
   </div>
+  </main>
 </body>
 </html>

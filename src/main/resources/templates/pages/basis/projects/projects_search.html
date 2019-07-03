@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basis/layout}">
+<head th:include="basis/layout :: head('案件管理')">
+</head>
+<div layout:fragment="contents">
+  <div th:include="basis/components :: header('案件検索')"></div>
+</div>
+</html>
