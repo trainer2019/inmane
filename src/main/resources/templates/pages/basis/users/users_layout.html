@@ -4,8 +4,7 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{basis/layout}">
   
-<head th:fragment="head(pageTitle)">
-<meta th:unless="${#strings.isEmpty(pageTitle)}" th:include="basis/layout :: head(${pageTitle})" th:remove="tag"></meta>
+<head>
 <link rel="stylesheet" th:href="@{/css/page/users.css}" />
 <script th:src="@{/js/page/users.js}"></script>
 </head>

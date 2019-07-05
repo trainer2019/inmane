@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basis/layout}">
-<head th:include="basis/layout :: head('スタッフ管理')">
+<head>
+<title>スタッフ検索</title>
 </head>
+
 <div layout:fragment="contents">
-  <div th:include="basis/components :: header('スタッフ検索')"></div>
+  <div th:include="basis/components :: header('スタッフ検索')">スタッフ検索</div>
 </div>
 </html>

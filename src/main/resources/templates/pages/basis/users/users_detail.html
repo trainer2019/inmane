@@ -6,7 +6,6 @@
 <head th:with="uri      = ${#httpServletRequest.requestURI}
                  , isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')}
                  , isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
-<meta th:include="basis/users/users_layout :: head('')"></meta>
 <title th:text="#{pages.title.system} + ${isDetail} ? 'ユーザ詳細' : 'ユーザ編集'"></title>
 </head>
 <body>

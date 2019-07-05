@@ -17,7 +17,7 @@ public class ClientsController extends AbstractAppController {
   // テンプレート配置先パス
   final static String TEMPLATES_PATH = "basis/clients/";
 
-  @RequestMapping(value = "clients", method = RequestMethod.GET)
+  @RequestMapping(value = "maintenance/clients", method = RequestMethod.GET)
   String showStaffList(Model model) {
     return TEMPLATES_PATH + "clients_search";
   }

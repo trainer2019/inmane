@@ -3,8 +3,10 @@
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{basis/users/users_layout}">
-<head th:include="basis/users/users_layout :: head('ユーザ登録')" th:remove="tag">
+<head>
+<title>ユーザ登録</title>
 </head>
+
 <body>
   <!-- /* コンテンツのヘッダは不要なのでusers/users_layoutのheaderの中身を上書き */ -->
   <div layout:fragment="header"></div>

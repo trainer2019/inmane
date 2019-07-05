@@ -21,22 +21,28 @@
         <div class="d-block flex-row mx-md-auto mx-0">
           <ul class="list-unstyled">
             <li>
-              <a class="list-group-item" th:href="@{/assignments}">
+              <a class="list-group-item font-weight-bold" th:href="@{/assignments}">
                 <span>稼働管理状況・契約</span>
               </a>
             </li>
             <li>
-              <a class="list-group-item" th:href="@{/home}">
+              <a class="list-group-item font-weight-bold" th:href="@{/home}">
                 <span>スタッフ・取引先・請求先・案件</span>
               </a>
             </li>
             <li>
-              <a th:if="${'ADMIN'.equals(sessionUserRole)}" class="list-group-item" 
+              <a th:if="${'ADMIN'.equals(sessionUserRole)}" class="list-group-item font-weight-bold" 
                 th:href="@{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}">
                 <span>ユーザ情報メンテナンス</span>
               </a>
             </li>
-
+          </ul>
+          <ul class="list-unstyled" style="opacity: .7">
+            <li>
+              <a class="list-group-item text-center font-weight-bold active" href="javascript:App.logout();">
+                <i class="fas fa-fw fa-sign-out-alt"></i><span>ログアウト</span>
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

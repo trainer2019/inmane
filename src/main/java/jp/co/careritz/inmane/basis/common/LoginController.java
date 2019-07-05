@@ -27,6 +27,6 @@ public class LoginController extends AbstractAppController {
 
   @RequestMapping(value = "index", method = RequestMethod.GET)
   String index(Model model) {
-    return "index";
+    return "home";
   }
 }

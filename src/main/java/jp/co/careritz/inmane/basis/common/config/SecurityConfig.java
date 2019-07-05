@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginProcessingUrl("/security/login") // 認証URL
         .usernameParameter("userId") // ユーザ名のリクエストパラメータ名
         .passwordParameter("password") // パスワードのリクエストパラメータ名
-        .defaultSuccessUrl("/index", true) // 認証成功時の遷移先URL
+        .defaultSuccessUrl("/home", true) // 認証成功時の遷移先URL
         .failureHandler(loginFailureHandler) // 認証失敗時のカスタム処理
         // .failureUrl("/loginForm?error=true") // 認証失敗時の遷移先URL
         .permitAll();

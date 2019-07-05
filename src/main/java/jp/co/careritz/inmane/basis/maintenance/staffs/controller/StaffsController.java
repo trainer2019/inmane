@@ -18,7 +18,7 @@ public class StaffsController extends AbstractAppController {
   // テンプレート配置先パス
   final static String TEMPLATES_PATH = "basis/staffs/";
 
-  @RequestMapping(value = "staffs", method = RequestMethod.GET)
+  @RequestMapping(value = "maintenance/staffs", method = RequestMethod.GET)
   String showStaffList(Model model) {
     return TEMPLATES_PATH + "staffs_search";
   }

@@ -180,8 +180,8 @@ CREATE TABLE BILL_ADDRESSES(
   , BILL_UNIT_TYPE NUMBER(1, 0)
   , BILL_UNIT NUMBER(3, 0) DEFAULT 0
   , ZIP_CODE CHAR (7)
-  , ADRESS1 VARCHAR2(100)
-  , ADRESS2 VARCHAR2(100)
+  , ADDRESS1 VARCHAR2(100)
+  , ADDRESS2 VARCHAR2(100)
   , COMPANY_NAME1 VARCHAR2(100)
   , COMPANY_NAME2 VARCHAR2(100)
   , COMPANY_NAME3 VARCHAR2(100)
@@ -203,8 +203,8 @@ comment on column BILL_ADDRESSES.SITE is 'ÉTÉCÉg';
 comment on column BILL_ADDRESSES.BILL_UNIT_TYPE is 'êøãÅíPà éÌï ';
 comment on column BILL_ADDRESSES.BILL_UNIT is 'êøãÅíPà ';
 comment on column BILL_ADDRESSES.ZIP_CODE is 'óXï÷î‘çÜ';
-comment on column BILL_ADDRESSES.ADRESS1 is 'èZèäÇP';
-comment on column BILL_ADDRESSES.ADRESS2 is 'èZèäÇQ';
+comment on column BILL_ADDRESSES.ADDRESS1 is 'èZèäÇP';
+comment on column BILL_ADDRESSES.ADDRESS2 is 'èZèäÇQ';
 comment on column BILL_ADDRESSES.COMPANY_NAME1 is 'âÔé–ñºÇP';
 comment on column BILL_ADDRESSES.COMPANY_NAME2 is 'âÔé–ñºÇQ';
 comment on column BILL_ADDRESSES.COMPANY_NAME3 is 'âÔé–ñºÇR';

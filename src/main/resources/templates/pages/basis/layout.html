@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:fragment="head(pageTitle)">
+<head>
 <meta charset="utf-8">
+<!-- Title -->
+<title layout:title-pattern="$DECORATOR_TITLE | $CONTENT_TITLE">稼働状況管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="common-meta">
-<title th:text="#{pages.title.system} + ${#strings.isEmpty(pageTitle) ? '' : ' | ' + pageTitle }"></title>
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+<!-- Reset CSS -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.1/build/cssreset/cssreset-min.css">
 <!-- CSS Global Compulsory -->
 <link rel="stylesheet" th:href="@{/css/app.css}" />
 <link rel="stylesheet" th:href="@{/plugins/sweetalert2-7.24.3/dist/sweetalert2.min.css}" />

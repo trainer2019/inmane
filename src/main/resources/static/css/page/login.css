@@ -35,12 +35,13 @@
 	margin: 0 auto;
 }
 .bg-image {
-  background-image: url('../../images/login_bg.png');
-  background-size: cover;
+	background-image: url('../../images/login_bg.png');
+	background-size: cover;
 }
+
 .bg-mask {
-  height: 100%;
-  background: rgba(255,255,255,0.5);
+	height: 100vw;
+	background: rgba(255, 255, 255, 0.5);
 }
 
 .list-group-item {

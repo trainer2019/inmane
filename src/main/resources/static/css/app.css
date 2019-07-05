@@ -38,8 +38,11 @@ a, a:hover, a:focus {
 }
 
 header {
-  height: 2.8em;
-  text-shadow: 3px 3px 3px #7386D5;
+	height: 2.8em;
+	text-shadow: 3px 3px 3px #7386D5;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border-left: 3px solid #7386D5;
 }
 
 main {
@@ -92,6 +95,11 @@ i, span {
 .hidden{
    display:none;   
 }
+
+.collapse.in {
+  display: block;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -122,12 +130,10 @@ i, span {
 	display: block;
 }
 
-
-
 #sidebar.active ul li a {
 	padding: 15px 10px;
 	text-align: center;
-	font-size: 0.60em;
+	font-size: 0.53em;
 }
 
 #sidebar.active ul li a i {
@@ -140,6 +146,7 @@ i, span {
 
 #sidebar.active ul ul a {
 	padding: 10px !important;
+	font-size: 0.53em!important;
 }
 
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before
@@ -172,8 +179,8 @@ i, span {
 }
 
 #sidebar ul li a {
-	padding: 17px;
-	font-size: 1.1em;
+	padding: 13px;
+	font-size: 1.0em;
 	display: block;
 	text-align: left;
 	color: inherit;
@@ -190,32 +197,51 @@ i, span {
 	margin-right: 10px;
 }
 
-#sidebar ul li.active>a, a[aria-expanded="true"] {
-	color: #fff;
-	background: #6d7fcc;
+#sidebar .selected {
+	background: #dc9edc;
+}
+
+/*#sidebar ul li.active>a, a[aria-expanded="true"] {
+	opacity: .8;
+	color: #7386D5!important;
+	background: #fff;
+}*/
+
+.activeMenu {
+	opacity: .8;
+	color: #7386D5!important;
+	background: #fff;
 }
 
 a[data-toggle="collapse"] {
 	position: relative;
 }
 
-a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
-	content: '\e259';
+a[aria-expanded="false"]::after {
+	font-family: "Font Awesome 5 Free";
+	content: "\f107";
+	font-weight: bold;
 	display: block;
 	position: absolute;
 	right: 20px;
-	font-family: 'Glyphicons Halflings';
-	font-size: 1.6em;
+	top: 12px;
+	font-size: 1.2em;
 }
 
-a[aria-expanded="true"]::before {
-	content: '\e260';
+a[aria-expanded="true"]::after {
+	font-family: "Font Awesome 5 Free";
+	content: "\f106";
+	font-weight: bold;
+	display: block;
+	position: absolute;
+	right: 20px;
+	top: 12px;
+	font-size: 1.2em;
 }
 
 ul ul a {
 	font-size: 0.9em !important;
 	padding-left: 30px !important;
-	background: #6d7fcc;
 }
 
 ul.ctas {
