@@ -15,7 +15,7 @@ public class BillAdressesController extends AbstractAppController {
   // 定数
   // ----------------------------------------------------------------------
   // テンプレート配置先パス
-  final static String TEMPLATES_PATH = "basis/bill_adresses/";
+  final static String TEMPLATES_PATH = "basis/billAdresses/";
 
   @RequestMapping(value = "maintenance/bill_adresses", method = RequestMethod.GET)
   String showStaffList(Model model) {

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basis/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basis_layout}">
 <head>
 <title>Home</title>
+
 </head>
 
 <div layout:fragment="contents">
   <div th:include="basis/components :: header('Home')"></div>
+  <p th:style="'background-image: url(' + @{/images/it_service_tokucho_photo01.jpg} + ');height:50vh; margin-top:100px;opacity: .6'">
+  </p>
 </div>
 </html>
