@@ -5,107 +5,159 @@
 </head>
 
 <body>
-  <main> <!--/* Modalダイアログ */-->
-  <div th:fragment="modalDialog">
-    <modalDialog>
-    <style>
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-}
-/* Modal Content */
-.modal-content {
-	background-color: #fefefe;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 50%;
-	display: block;
-}
+  <main>
+  <div th:fragment="header(contentsTitle)">
+    <header>
+        <nav class="navbar navbar-default">
+          <div class="navbar-header">
+            <span class="pageTitle" th:text="${contentsTitle}"></span>
+          </div>
+        </nav>
+    </header>
+  </div>
 
-.closeMark {
-	color: #aaaaaa;
-	float: right;
-	font-size: 25px;
-	font-weight: bold;
-}
-
-.closeMark:hover, .closeMark:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-</style>
-    <div id="modalDialog" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="closeMark" onclick="">&times;</span>
-        <p id="msg"></p>
-        <button id="btnOk">はい</button>
-        <button id="btnCancel">キャンセル</button>
-      </div>
-    </div>
-    </modalDialog>
-
-    <!--/* ダイアログメッセージ */-->
-    <div th:fragment="dialogMessages">
-      <dialogMessages>
-        <input type="hidden" id="appCompleteMessageSuccess" th:value='${appCompleteMessageSuccess}' />
-        <input type="hidden" id="appCompleteMessageWarning" th:value='${appCompleteMessageWarning}' />
-        <input type="hidden" id="appCompleteMessageFailure" th:value='${appCompleteMessageFailure}' />
-      </dialogMessages>
-    </div>
-    <!--/* サイドメニュー */-->
-    <div th:fragment="sideMenu">
-      <sideMenu>
-        <div class="wrapper">
-          <nav id="sidebar">
-            <div class="sidebar-header">
-              <h3>稼働状況管理<br>システム</h3>
-            </div>
-            <div th:with=
-               "menus = ${ {
-                            '稼働状況情報', 
-                            '契約情報'
-                          } }, 
-                paths = ${ {
-                            '__@{/assignments}__',
-                            '__@{/contracts}__'
-                          } }, 
-                toPaths = ${ {
-                            '__@{/assignments}__',
-                            '__@{/contracts}__'
-                          } }, 
-                roles   = ${ {
-                            'USER,ADMIN',
-                            'USER,ADMIN'
-                          } }, 
-                uri   = ${#httpServletRequest.requestURI}">
-              <ul class="list-unstyled" th:each="menu, status : ${menus}">
-                <li th:if="${#strings.contains(roles[__${status.index}__], sessionUserRole)}" 
-                  th:with="bg=${#strings.contains(uri, paths[__${status.index}__])} ? 'background-color:#dc9edc;' : '' "
-                  th:style="${bg}">
-                  <a th:href="${toPaths[__${status.index}__]}">[[${menu}]]</a></li>
+  <div th:fragment="contentsHeader"></div>
+  <!--/* ダイアログメッセージ */-->
+  <div th:fragment="dialogMessages">
+    <dialogMessages>
+      <input type="hidden" id="appCompleteMessageSuccess" th:value='${appCompleteMessageSuccess}' />
+      <input type="hidden" id="appCompleteMessageWarning"th:value='${appCompleteMessageWarning}' />
+      <input type="hidden" id="appCompleteMessageFailure" th:value='${appCompleteMessageFailure}' />
+    </dialogMessages>
+  </div>
+  <!--/* サイドメニュー */-->
+  <div th:fragment="sideMenu">
+      <div class="wrapper bg-image" id="sideMenu" style="display:none;">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+          <div class="sidebar-header" style="border-bottom: solid 1px #fff; padding-right: 10px;">
+            <a class="text-decoration-none text-light" th:href="@{/home}">
+              <img th:src="@{/images/logo.png}" alt="logo" class="rounded-circle" width="42em" height="32em" style="opacity: .6" />
+              <span id="title" class="ml-1 headline" title="稼働状況管理"></span>
+            </a>
+          </div>
+          <div class="text-right" style="padding: 3px;">
+            <button type="button" id="sidebarCollapse" class="btn btn-dark navbar-btn" style="line-height: 1;">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+          <ul class="list-unstyled components"
+            th:with="uri       = ${#httpServletRequest.requestURI}
+                     , isMente = ${#strings.contains(uri, '__@{/maintenance/users/}__')}
+                     , bgColor = '#dc9edc;'
+                     , home            = @{/home}
+                     , assignments     = @{/assignments}
+                     , contracts        = @{/contracts}
+                     , projects      = @{/projects}
+                     , bill_adresses = @{/bill_adresses}
+                     , clients        = @{/clients}
+                     , staffs        = @{/staffs}
+                     , users         = @{/maintenance/users/search?roleName=ALL&nonIsInvalid=on}
+                     ">
+            <li th:with="bg=${#strings.contains(uri, home) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${home}">
+                <i class="fas fa-fw fa-home"></i> Home
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, assignments) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${assignments}">
+                <i class="fas fa-fw fa-user-tie"></i> 稼働状況
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, contracts) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${contracts}">
+                <i class="fas fa-fw fa-file-contract"></i> 契約情報
+              </a>
+            </li>
+            <li>
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+              <ul class="collapse list-unstyled" id="pageSubmenu">
+                  <li><a href="#">Page 1</a></li>
+                  <li><a href="#">Page 2</a></li>
+                  <li><a href="#">Page 3</a></li>
               </ul>
-            </div>
-            <br/>
-            <ul class="list-unstyled">
-              <li><a th:href="@{/index}"> <span><i class="far fa-arrow-alt-circle-left" style="padding-right: 5px;"></i>戻る </a></li>
-            </ul>
-            <ul class="list-unstyled ctas">
-              <li><a class="article" href="javascript:App.logout();">ログアウト</a></li>
-            </ul>
-          </nav>
-        </div>
-      </sideMenu>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, projects) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${projects}">
+                <i class="fas fa-fw fa-list-alt"></i> 案件管理
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, projects) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${projects}">
+                <i class="fas fa-fw fa-list-alt"></i> 案件管理
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, bill_adresses) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${bill_adresses}">
+                <i class="far fa-fw fa-file"></i> 請求先管理
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, clients) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${clients}">
+                <i class="fas fa-fw fa-building"></i> 取引先管理
+              </a>
+            </li>
+            <li th:with="bg=${#strings.contains(uri, staffs) ? bgColor : '' }" th:style="'background-color:' + ${bg}">
+              <a th:href="${staffs}">
+                <i class="fas fa-fw fa-address-card"></i> スタッフ管理
+              </a>
+            </li>
+            <li th:if="${sessionUserRole=='ADMIN'}" th:with="bg=${bgColor}" th:style="'background-color:' + ${bg}">
+              <a th:href="${users}">
+                <i class="fas fa-fw fa-list-alt"></i> ユーザ管理
+              </a>
+            </li>
+          </ul>
+          <ul class="list-unstyled">
+            <li>
+              <a th:href="@{/index}">
+                <i class="fas fa-fw fa-arrow-alt-circle-left" style="padding-right: 5px;"></i>戻る
+              </a>
+            </li>
+          </ul>
+          <ul class="list-unstyled ctas">
+            <li>
+              <a class="article text-center font-weight-bold" href="javascript:App.logout();">
+                <i class="fas fa-sign-out-alt"></i>ログアウト
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <script type="text/javascript">
+        $(document).ready(() => {
+          $(() => {
+            const storage = localStorage;
+            const isActive = storage.getItem('sidebar');
+            if (isActive=='true') {
+              $('#sidebar').toggleClass('active');
+            }
+            $('#sideMenu').show();
+          });
+          $('#sidebarCollapse').on('click', () => {
+            $('#sideMenu').hide();
+            $('#sidebar, #content').toggleClass('active');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            const storage = localStorage;
+            const isActive = $('#sidebar').hasClass('active');
+            storage.setItem('sidebar', isActive);
+            fade();
+            $('#sideMenu').fadeIn('slow');
+          });
+          fade();
+        });
+        const fade = () => {
+          const $allMsg = $('#title');
+          const $wordList = $('#title').attr('title').split('');
+          $('#title').html("");
+          $.each($wordList, (idx, elem) => {
+              const newEL = $('<span>').text(elem).css({ opacity: 0 });
+              newEL.appendTo($allMsg);
+              newEL.delay(idx * 70);
+              newEL.animate({ opacity: 1 }, 1100);
+            });
+          };
+      </script>
     </div>
   </main>
 </body>

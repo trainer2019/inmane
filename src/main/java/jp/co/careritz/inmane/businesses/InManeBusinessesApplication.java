@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan({"jp.co.careritz.inmane.commons", "jp.co.careritz.inmane.businesses"})
+@ComponentScan({"jp.co.careritz.inmane.basis", "jp.co.careritz.inmane.businesses"})
 @SpringBootApplication
 public class InManeBusinessesApplication {
 
