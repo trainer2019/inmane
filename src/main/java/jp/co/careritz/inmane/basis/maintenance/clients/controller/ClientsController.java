@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import jp.co.careritz.inmane.basis.common.AbstractAppController;
 
 /**
  * 取引先管理コントローラ.
  */
 @Controller
-public class ClientsController {
+public class ClientsController extends AbstractAppController {
   // ----------------------------------------------------------------------
   // 定数
   // ----------------------------------------------------------------------
@@ -18,6 +19,6 @@ public class ClientsController {
 
   @RequestMapping(value = "maintenance/clients", method = RequestMethod.GET)
   String showStaffList(Model model) {
-    return TEMPLATES_PATH + "clients_search";
+    return TEMPLATES_PATH + "search";
   }
 }

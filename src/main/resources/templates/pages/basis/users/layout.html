@@ -2,7 +2,7 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{basis_layout}">
+  layout:decorate="~{common/layout}">
   
 <head>
 <link rel="stylesheet" th:href="@{/css/page/users.css}" />
@@ -15,7 +15,7 @@
  
     <!--/* ▼ ヘッダー表示 */-->
     <div layout:fragment="header(contentsTitle)">
-      <div th:unless="${#strings.isEmpty(contentsTitle)}" th:include="basis/components :: header(${contentsTitle})"></div>
+      <div th:unless="${#strings.isEmpty(contentsTitle)}" th:include="common/components :: header(${contentsTitle})"></div>
     </div>
     <!--/* ▲ ヘッダー表示 */-->
     

@@ -83,7 +83,7 @@ public class UsersController extends AbstractAppController {
     if (bindingResult.hasErrors()) {
       model.addAttribute("UsersSearchForm", form);
       model.addAttribute("usersList", new ArrayList<UsersDto>());
-      return TEMPLATES_PATH + "users_layout :: contents";
+      return TEMPLATES_PATH + "search";
     }
 
     UsersDto dto = new UsersDto();
@@ -99,7 +99,7 @@ public class UsersController extends AbstractAppController {
     // 検索結果を設定
     model.addAttribute("usersList", usersList);
 
-    return TEMPLATES_PATH + "users_search";
+    return TEMPLATES_PATH + "search";
   }
 
   /**
@@ -117,7 +117,7 @@ public class UsersController extends AbstractAppController {
 
     model.addAttribute("usersCreateForm", form);
 
-    return TEMPLATES_PATH + "users_create";
+    return TEMPLATES_PATH + "create";
   }
 
   /**
@@ -134,7 +134,7 @@ public class UsersController extends AbstractAppController {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("usersCreateForm", form);
-      return TEMPLATES_PATH + "users_create";
+      return TEMPLATES_PATH + "new";
     }
 
     final String prefix = propertyConfig.get("user.defaultpass.prefix");
@@ -161,7 +161,7 @@ public class UsersController extends AbstractAppController {
       // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
       model.addAttribute(APP_COMPLETE_MESSAGE_ID_FAILURE, errMsg);
-      return TEMPLATES_PATH + "users_create";
+      return TEMPLATES_PATH + "create";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();
   }
@@ -200,7 +200,7 @@ public class UsersController extends AbstractAppController {
 
     model.addAttribute("usersCreateForm", form);
 
-    return TEMPLATES_PATH + "users_detail";
+    return TEMPLATES_PATH + "detail";
   }
 
   /**
@@ -238,7 +238,7 @@ public class UsersController extends AbstractAppController {
 
     model.addAttribute("usersCreateForm", form);
 
-    return TEMPLATES_PATH + "users_detail";
+    return TEMPLATES_PATH + "detail";
   }
 
   /**
@@ -246,7 +246,7 @@ public class UsersController extends AbstractAppController {
    * 
    * @param userId
    *
-   * @return ユーザ編集画面
+   * @return ユーザ詳細画面
    */
   @PostMapping("edit")
   public String update(Model model, @ModelAttribute @Valid UsersCreateForm form,
@@ -256,7 +256,7 @@ public class UsersController extends AbstractAppController {
     if (bindingResult.hasErrors()) {
       bindingResult.getFieldErrors().stream().forEach(System.out::println);
       model.addAttribute("usersCreateForm", form);
-      return TEMPLATES_PATH + "users_detail";
+      return TEMPLATES_PATH + "detail";
     }
 
     final String password = new BCryptPasswordEncoder().encode(form.getPassword());
@@ -283,7 +283,7 @@ public class UsersController extends AbstractAppController {
       // 入力内容を再表示するためフォームを再設定
       model.addAttribute("usersCreateForm", form);
       model.addAttribute(APP_COMPLETE_MESSAGE_ID_FAILURE, errMsg);
-      return TEMPLATES_PATH + "users_detail";
+      return TEMPLATES_PATH + "detail";
     }
     return "redirect:/maintenance/users/detail?userId=" + dto.getUserId();
   }

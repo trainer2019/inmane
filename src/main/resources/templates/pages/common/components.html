@@ -50,7 +50,7 @@
                      , assignments   = @{/assignments}
                      , contracts     = @{/contracts}
                      , projects      = @{/maintenance/projects}
-                     , bill_adresses = @{/maintenance/bill_adresses}
+                     , bill_addresses = @{/maintenance/bill_addresses}
                      , clients        = @{/maintenance/clients}
                      , staffs        = @{/maintenance/staffs}
                      , users         = @{/maintenance/users}
@@ -88,8 +88,8 @@
                     <i class="fas fa-fw fa-list-alt"></i> 案件管理
                   </a>
                 </li>
-                <li th:class="${#strings.contains(uri, bill_adresses) ? selected : '' }">
-                  <a th:href="${bill_adresses}">
+                <li th:class="${#strings.contains(uri, bill_addresses) ? selected : '' }">
+                  <a th:href="${bill_addresses}">
                     <i class="far fa-fw fa-file"></i> 請求先管理
                   </a>
                 </li>

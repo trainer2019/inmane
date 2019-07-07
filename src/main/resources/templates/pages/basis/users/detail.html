@@ -2,7 +2,7 @@
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{basis/users/users_layout}">
+  layout:decorate="~{basis/users/layout}">
 <head th:with="uri      = ${#httpServletRequest.requestURI}
                  , isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')}
                  , isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
@@ -15,7 +15,7 @@
                  , isEdit   = ${#strings.contains(uri, '__@{/maintenance/users/edit}__')}
                  , isDetail = ${#strings.contains(uri, '__@{/maintenance/users/detail}__')}">
         <div layout:fragment="header">
-          <div th:include="basis/components :: header(${isDetail} ? 'ユーザ詳細' : 'ユーザ編集')"></div>
+          <div th:include="common/components :: header(${isDetail} ? 'ユーザ詳細' : 'ユーザ編集')"></div>
         </div>
         <div class="tab">
           <div class="boardArea" style="border-top: #c0c0c0 solid 1px;">

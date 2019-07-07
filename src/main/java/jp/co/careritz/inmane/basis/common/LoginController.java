@@ -25,7 +25,10 @@ public class LoginController extends AbstractAppController {
     return "login";
   }
 
-  @RequestMapping(value = "index", method = RequestMethod.GET)
+  /**
+   * Home画面表示処理.
+   */
+  @RequestMapping(value = "home", method = RequestMethod.GET)
   String index(Model model) {
     return "home";
   }
