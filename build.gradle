@@ -37,7 +37,7 @@ dependencies {
 	// Layout Diarect
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
 	// Development
-	implementation project('inmane-commons')
+	implementation project('inmane-basis')
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
