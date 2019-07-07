@@ -4,4 +4,4 @@ pluginManagement {
   }
 }
 rootProject.name = 'inmane-businesses'
-includeFlat  'inmane-commons'
+includeFlat  'inmane-basis'

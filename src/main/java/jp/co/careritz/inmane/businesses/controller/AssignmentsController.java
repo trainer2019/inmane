@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AssignmentsController {
   @RequestMapping(value = "assignments", method = RequestMethod.GET)
   String showStaffList(Model model) {
-    return "assignments/assignments_search";
+    return "assignments/search";
   }
 }

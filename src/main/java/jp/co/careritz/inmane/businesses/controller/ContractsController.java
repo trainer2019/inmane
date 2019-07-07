@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ContractsController {
   @RequestMapping(value = "contracts", method = RequestMethod.GET)
   String showContractsList(Model model) {
-    return "contracts/contracts_search";
+    return "contracts/search";
   }
 }
